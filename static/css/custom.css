@@ -1,0 +1,21 @@
+/* Custom styles */
+#chat-container {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.user-message {
+    background-color: var(--bs-primary);
+    align-self: flex-end;
+}
+
+.bot-message {
+    background-color: var(--bs-secondary);
+    align-self: flex-start;
+}
