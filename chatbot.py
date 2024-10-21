@@ -17,8 +17,15 @@ def get_intent(text):
         return "register_class"
     elif any(token.text in ["advisor", "appointment", "schedule"] for token in doc):
         return "schedule_appointment"
+    elif any(token.text in ["calendar", "date", "deadline", "semester", "exam"] for token in doc):
+        return "calendar_query"
     else:
         return "general_question"
+
+def extract_date_entities(text):
+    doc = nlp(text)
+    date_entities = [ent.text for ent in doc.ents if ent.label_ == "DATE"]
+    return date_entities
 
 def get_response(intent, text):
     if intent == "empty_input":
@@ -35,6 +42,19 @@ def get_response(intent, text):
         advisor_list = "\n".join([f"{advisor.name} - {advisor.department}" for advisor in advisors])
         return f"Certainly! Here's a list of available advisors:\n{advisor_list}\n\nTo schedule an appointment, please provide the name of the advisor you'd like to meet with."
 
+    elif intent == "calendar_query":
+        date_entities = extract_date_entities(text)
+        faqs = FAQ.query.filter(FAQ.category == "Academic Calendar").all()
+        
+        for faq in faqs:
+            if any(entity.lower() in faq.question.lower() for entity in date_entities):
+                return faq.answer
+        
+        # If no specific match is found, return a general calendar response
+        return "I couldn't find a specific answer to your calendar query. Here's a summary of important dates:\n\n" + \
+               "\n".join([f"{faq.question}: {faq.answer}" for faq in faqs]) + \
+               "\n\nFor more detailed information, please check the official academic calendar on our website or contact an advisor."
+
     else:
         # Search FAQ database for relevant answer
         keywords = [token.lemma_ for token in nlp(text) if not token.is_stop and token.is_alpha]
@@ -43,7 +63,8 @@ def get_response(intent, text):
             if faqs:
                 return faqs[0].answer
         
-        return "I'm sorry, I don't have a specific answer for that question. Would you like to schedule an appointment with an advisor for more detailed information?"
+        # Fallback mechanism
+        return "I'm sorry, I don't have a specific answer for that question. You can find more information on our official website or in the student handbook. Would you like to schedule an appointment with an advisor for more detailed information?"
 
 def process_message(text):
     if not text or not isinstance(text, str):
