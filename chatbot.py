@@ -88,13 +88,18 @@ def process_message(text):
     
     # Spell-check the input
     words = text.split()
-    corrected_words = [spell.correction(word) for word in words]
-    corrected_text = " ".join(corrected_words)
-    
-    # If corrections were made, inform the user
-    if corrected_text != text:
-        response = f"I noticed some potential spelling errors. Did you mean: '{corrected_text}'?\n\n"
+    misspelled = spell.unknown(words)
+    if misspelled:
+        corrected_words = [spell.correction(word) if word in misspelled else word for word in words]
+        corrected_text = " ".join(corrected_words)
+        
+        # If corrections were made, inform the user
+        if corrected_text != text:
+            response = f"I noticed some potential spelling errors. Did you mean: '{corrected_text}'?\n\n"
+        else:
+            response = ""
     else:
+        corrected_text = text
         response = ""
     
     intent = get_intent(corrected_text)
