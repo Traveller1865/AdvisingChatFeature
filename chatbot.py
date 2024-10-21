@@ -1,8 +1,10 @@
 import spacy
 from models import FAQ, Advisor
 from app import db
+from spellchecker import SpellChecker
 
 nlp = spacy.load("en_core_web_sm")
+spell = SpellChecker()
 
 def get_intent(text):
     if not text or not text.strip():
@@ -84,6 +86,17 @@ def process_message(text):
     if not text or not isinstance(text, str):
         return "I'm sorry, but I couldn't process your input. Please try again with a valid text message."
     
-    intent = get_intent(text)
-    response = get_response(intent, text)
+    # Spell-check the input
+    words = text.split()
+    corrected_words = [spell.correction(word) for word in words]
+    corrected_text = " ".join(corrected_words)
+    
+    # If corrections were made, inform the user
+    if corrected_text != text:
+        response = f"I noticed some potential spelling errors. Did you mean: '{corrected_text}'?\n\n"
+    else:
+        response = ""
+    
+    intent = get_intent(corrected_text)
+    response += get_response(intent, corrected_text)
     return response

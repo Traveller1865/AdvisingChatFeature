@@ -580,6 +580,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pyspellchecker"
+version = "0.8.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/5d/f4/5ed7eefd94df484406d2ff29af54daa940ea4cfc265e5add3d2150ff0640/pyspellchecker-0.8.1.tar.gz", hash = "sha256:3478ca8484d1c2db0c93d12b3c986cd17958c69f47b3ed7ef4d3f4201e591776", size = 6773020 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/d2/c7e3b3a61a34b9320399fa731d1f9f0c73db8a1f28c6764e9e11efa68a29/pyspellchecker-0.8.1-py3-none-any.whl", hash = "sha256:d91e9e1064793ae1ee8e71b06ca40eeb8e5923437c54291a8e041b447792b640", size = 6771060 },
+]
+
+[[package]]
 name = "repl-nix-studentadvisorbot"
 version = "0.1.0"
 source = { virtual = "." }
@@ -591,6 +600,7 @@ dependencies = [
     { name = "flask-sqlalchemy" },
     { name = "numpy" },
     { name = "psycopg2-binary" },
+    { name = "pyspellchecker" },
     { name = "spacy" },
 ]
 
@@ -603,6 +613,7 @@ requires-dist = [
     { name = "flask-sqlalchemy", specifier = ">=3.1.1" },
     { name = "numpy", specifier = "==1.24.3" },
     { name = "psycopg2-binary", specifier = ">=2.9.10" },
+    { name = "pyspellchecker", specifier = ">=0.8.1" },
     { name = "spacy", specifier = "==3.5.0" },
 ]
 
