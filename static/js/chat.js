@@ -29,13 +29,22 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: 'message=' + encodeURIComponent(message)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            addMessage('bot', data.response);
+            if (data && data.response) {
+                addMessage('bot', data.response);
+            } else {
+                throw new Error('Invalid response from server');
+            }
         })
         .catch(error => {
             console.error('Error:', error);
-            addMessage('bot', 'Sorry, there was an error processing your request.');
+            addMessage('bot', 'Sorry, there was an error processing your request. Please try again later.');
         });
     }
 });
