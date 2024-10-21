@@ -1,0 +1,115 @@
+Goal
+Build a student advising chatbot designed to answer preliminary student questions and provide guidance, connect them with advisors when needed, and integrate with university systems. The bot must prioritize network security by relying on a static knowledge base with manual updates (no continuous learning).
+
+Development Requirements
+Hosting Environment
+
+The chatbot must run locally or in a closed/private environment (like a university portal).
+Use Flask or FastAPI backend with SQLite or PostgreSQL as the database for storing FAQs.
+Core Features
+
+Natural Language Processing (NLP):
+
+Use Rasa or SpaCy for NLP.
+Train the model on a static set of internal documents, including:
+Academic policies, course catalogs, financial aid details, FAQ.
+Academic calendar with deadlines.
+Decision Tree Flow:
+
+Create guided responses to common questions with predefined flows.
+Example: If a student asks, "How do I drop a class?"
+Provide deadlines and steps.
+Offer to connect them to an advisor for further help.
+Escalation System:
+
+If the chatbot cannot answer, it should:
+Suggest resources (e.g., link to the registrar or department contact page).
+Offer appointment booking with an advisor.
+Store advisor details in a database (linked to name, role, and availability).
+Backend Logic
+
+Use Flask/FastAPI for the API backend.
+Database fields for FAQs:
+Question: Text
+Answer: Text
+Category: (e.g., Academic Policy, Course Registration)
+Advisor Contact Info: Optional (linked to escalation)
+Student Authentication
+
+Integrate SSO (Single Sign-On) using university credentials to authenticate users.
+Authenticated students can receive personalized information (e.g., specific deadlines, registered courses).
+Appointment Booking
+
+Build a simple calendar integration where students can schedule meetings with advisors.
+Security Requirements
+
+Cut off continuous learning post-launch. Knowledge must be manually updated through admin access.
+Store sensitive data securely with encryption.
+Log chatbot interactions for compliance audits.
+Limit bot access to internal systems by running it within a private network or VPN.
+Tasks for Replit AI
+Set Up Backend
+
+Use Flask or FastAPI to create the API.
+Initialize SQLite/PostgreSQL for the FAQ and advisor database.
+Implement NLP Engine
+
+Use Rasa or SpaCy for intent recognition and response generation.
+Train it using provided internal document samples (e.g., policy excerpts).
+Build Core Chatbot Logic
+
+Create a decision tree to guide conversations.
+Example:
+Intent: “When is the drop deadline?”
+Response: “The deadline is October 31.”
+Follow-up: “Do you need help with the process or want to schedule an appointment?”
+Escalation System & Appointment Booking
+
+Add calendar booking logic.
+Use a table with advisor contact information (e.g., Name, Department, Email, Available Time Slots).
+Authentication Setup
+
+Add SSO integration to authenticate students via university credentials.
+Personalize responses for authenticated users based on their registered courses or academic standing.
+Create Security Features
+
+Disable continuous learning after training.
+Limit external data sharing and run chatbot in a secure environment (VPN or private cloud).
+Store interactions in logs for audit purposes.
+Testing and Deployment Plan
+
+Test the chatbot locally.
+Perform stress tests on common queries.
+Deploy it on a secure portal (on-premise or private network).
+Sample API Data Structure
+python
+Copy code
+# FAQ Database Schema Example
+CREATE TABLE faqs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    category TEXT,
+    advisor_contact TEXT
+);
+
+# Advisor Information Schema Example
+CREATE TABLE advisors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    department TEXT,
+    email TEXT,
+    availability TEXT
+);
+Expected Outcome
+A secure, closed-system student advising chatbot that can:
+
+Answer student questions based on pre-ingested knowledge.
+Escalate conversations to advisors when needed.
+Authenticate students via SSO.
+Schedule appointments through an integrated calendar.
+Operate securely within a private environment, without continuous learning or external data access.
+Additional Notes for Replit AI
+Use Replit’s collaborative environment to integrate all components iteratively.
+Prioritize security and static knowledge usage. Do not enable online training or dynamic content ingestion beyond initial setup.
+Let me know if you need to adjust any part of this prompt! This structure gives Replit AI clear, actionable steps to start building your chatbot.
