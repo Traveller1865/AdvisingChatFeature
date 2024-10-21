@@ -6,6 +6,7 @@ from chatbot import process_message
 from auth import authenticate_user
 from datetime import datetime, timedelta
 import logging
+import traceback
 
 # Configure logging
 logging.basicConfig(filename='chatbot.log', level=logging.ERROR)
@@ -31,6 +32,9 @@ def login():
 def chat():
     message = request.form.get('message')
     try:
+        if not message:
+            raise ValueError("Empty message received")
+        
         response = process_message(message)
         
         # Check if the message contains an advisor name for scheduling
@@ -51,7 +55,8 @@ def chat():
         
         return jsonify({'response': response})
     except Exception as e:
-        logging.error(f"Error processing message: {str(e)}")
+        error_message = f"Error processing message: {str(e)}\n{traceback.format_exc()}"
+        logging.error(error_message)
         return jsonify({'error': 'An error occurred while processing your message'}), 500
 
 @app.route('/log_error', methods=['POST'])

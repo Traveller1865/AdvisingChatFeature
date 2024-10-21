@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data && data.response) {
                 addMessage('bot', data.response);
+            } else if (data && data.error) {
+                throw new Error('Server error: ' + data.error);
             } else {
                 throw new Error('Invalid response from server: ' + JSON.stringify(data));
             }
@@ -45,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error:', error);
             addMessage('bot', 'Sorry, there was an error processing your request. Please try again later.');
-            // Log the error details
             logError(error);
         });
     }
