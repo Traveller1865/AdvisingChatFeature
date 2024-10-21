@@ -19,6 +19,8 @@ def get_intent(text):
         return "schedule_appointment"
     elif any(token.text in ["calendar", "date", "deadline", "semester", "exam"] for token in doc):
         return "calendar_query"
+    elif any(token.text in ["count", "how many", "number of"] for token in doc) and "advisor" in text.lower():
+        return "count_advisors"
     else:
         return "general_question"
 
@@ -39,8 +41,11 @@ def get_response(intent, text):
 
     elif intent == "schedule_appointment":
         advisors = Advisor.query.all()
-        advisor_list = "\n".join([f"{advisor.name} - {advisor.department}" for advisor in advisors])
-        return f"Certainly! Here's a list of available advisors:\n{advisor_list}\n\nTo schedule an appointment, please provide the name of the advisor you'd like to meet with."
+        if advisors:
+            advisor_list = "\n".join([f"{advisor.name} - {advisor.department}" for advisor in advisors])
+            return f"Certainly! Here's a list of available advisors:\n{advisor_list}\n\nTo schedule an appointment, please provide the name of the advisor you'd like to meet with."
+        else:
+            return "I apologize, but there are currently no advisors available in the system. Please check back later or contact the advising office directly."
 
     elif intent == "calendar_query":
         date_entities = extract_date_entities(text)
@@ -54,6 +59,15 @@ def get_response(intent, text):
         return "I couldn't find a specific answer to your calendar query. Here's a summary of important dates:\n\n" + \
                "\n".join([f"{faq.question}: {faq.answer}" for faq in faqs]) + \
                "\n\nFor more detailed information, please check the official academic calendar on our website or contact an advisor."
+
+    elif intent == "count_advisors":
+        advisor_count = Advisor.query.count()
+        if advisor_count == 0:
+            return "I'm sorry, but there are currently no advisors registered in our system."
+        elif advisor_count == 1:
+            return "There is currently 1 advisor available in our system."
+        else:
+            return f"There are currently {advisor_count} advisors available in our system."
 
     else:
         # Search FAQ database for relevant answer
