@@ -56,3 +56,13 @@ INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:00] "GET /static/js/chat.js H
 INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:01] "[32mGET / HTTP/1.1[0m" 302 -
 INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:01] "GET /login?next=/ HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:01] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:16] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:16] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:42:36] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:43:58] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:44:23] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:44:41] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:49:19] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:49:19] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.31 - - [21/Oct/2024 19:49:19] "GET /static/css/custom.css HTTP/1.1" 200 -
