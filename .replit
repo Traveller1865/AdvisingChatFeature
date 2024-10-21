@@ -23,6 +23,10 @@ args = "Run Flask App"
 task = "workflow.run"
 args = "Test Database Connection"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Test and Create User"
+
 [[workflows.workflow]]
 name = "Download spaCy model"
 author = "agent"
@@ -48,6 +52,17 @@ waitForPort = 5000
 
 [[workflows.workflow]]
 name = "Test Database Connection"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python db_test.py"
+
+[[workflows.workflow]]
+name = "Test and Create User"
 author = "agent"
 
 [workflows.workflow.metadata]

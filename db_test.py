@@ -1,31 +1,26 @@
 from app import app, db
-from models import User, FAQ, Advisor, Appointment
+from models import User
 
-def test_db_connection():
+def test_and_create_user():
     with app.app_context():
         try:
-            # Try to create all tables
-            db.create_all()
-            print("Database tables created successfully.")
+            # Check for existing users
+            existing_users = User.query.all()
+            if existing_users:
+                print("Existing users:")
+                for user in existing_users:
+                    print(f"Username: {user.username}, Email: {user.email}")
+                return
 
-            # Try to add a test user
+            # If no users exist, create a test user
             test_user = User(username="test_user", email="test@example.com")
             test_user.set_password("password123")
             db.session.add(test_user)
             db.session.commit()
-            print("Test user added successfully.")
-
-            # Query the user to verify
-            queried_user = User.query.filter_by(username="test_user").first()
-            if queried_user:
-                print(f"Test user retrieved: {queried_user.username}")
-            else:
-                print("Failed to retrieve test user.")
-
-            # Clean up
-            db.session.delete(test_user)
-            db.session.commit()
-            print("Test user removed.")
+            print("Test user created successfully.")
+            print("Test user credentials:")
+            print("Username: test_user")
+            print("Password: password123")
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -33,4 +28,4 @@ def test_db_connection():
             db.session.close()
 
 if __name__ == "__main__":
-    test_db_connection()
+    test_and_create_user()
