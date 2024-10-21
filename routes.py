@@ -5,6 +5,10 @@ from models import User, Advisor, Appointment
 from chatbot import process_message
 from auth import authenticate_user
 from datetime import datetime
+import logging
+
+# Configure logging
+logging.basicConfig(filename='chatbot.log', level=logging.ERROR)
 
 @app.route('/')
 @login_required
@@ -26,8 +30,12 @@ def login():
 @login_required
 def chat():
     message = request.form.get('message')
-    response = process_message(message)
-    return jsonify({'response': response})
+    try:
+        response = process_message(message)
+        return jsonify({'response': response})
+    except Exception as e:
+        logging.error(f"Error processing message: {str(e)}")
+        return jsonify({'error': 'An error occurred while processing your message'}), 500
 
 @app.route('/schedule_appointment', methods=['POST'])
 @login_required
@@ -49,3 +57,13 @@ def schedule_appointment():
     db.session.commit()
     
     return jsonify({'message': f'Appointment scheduled with {advisor_name} on {date_str}'})
+
+@app.route('/log_error', methods=['POST'])
+@login_required
+def log_error():
+    error_data = request.json
+    if error_data and 'error' in error_data:
+        logging.error(f"Client-side error: {error_data['error']}")
+        return jsonify({'message': 'Error logged successfully'}), 200
+    else:
+        return jsonify({'error': 'Invalid error data'}), 400
