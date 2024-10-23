@@ -1,11 +1,11 @@
-// Wait for DOM content to be loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeChat);
-} else {
-    initializeChat();
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // Only initialize chat if we're on the chat page
+    const chatContainer = document.querySelector('.chatbot-container');
+    if (!chatContainer) {
+        console.log('Not on chat page, skipping initialization');
+        return;
+    }
 
-function initializeChat() {
     // Get DOM elements with error handling
     const elements = {
         chatForm: document.getElementById('chat-form'),
@@ -15,7 +15,7 @@ function initializeChat() {
         dateElement: document.getElementById('current-date')
     };
 
-    // Verify required elements exist
+    // Verify all required elements exist
     const requiredElements = ['chatForm', 'userInput', 'chatMessages'];
     const missingElements = requiredElements.filter(key => !elements[key]);
 
@@ -26,12 +26,14 @@ function initializeChat() {
 
     // Initialize time display
     function updateTimeDisplay() {
-        if (elements.timeElement && elements.dateElement) {
-            const now = new Date();
+        const now = new Date();
+        if (elements.timeElement) {
             elements.timeElement.textContent = now.toLocaleTimeString([], { 
                 hour: '2-digit', 
                 minute: '2-digit' 
             });
+        }
+        if (elements.dateElement) {
             elements.dateElement.textContent = now.toLocaleDateString();
         }
     }
@@ -110,4 +112,4 @@ function initializeChat() {
             body: JSON.stringify({ error: errorMessage }),
         }).catch(err => console.error('Error logging:', err));
     }
-}
+});

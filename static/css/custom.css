@@ -16,12 +16,11 @@ body {
 .chatbot-header {
     background-color: #80a08c;
     color: white;
-    padding: 1.5rem;
 }
 
 .header-logo {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     padding: 0.25rem;
     background: white;
     border-radius: 50%;
@@ -29,9 +28,9 @@ body {
 
 /* Messages Area */
 .messages-container {
-    height: calc(100% - 160px);
+    height: calc(100% - 140px);
     overflow-y: auto;
-    padding: 1.5rem;
+    padding: 1rem;
     background-color: #fff2d4;
 }
 
@@ -58,7 +57,7 @@ body {
 /* Input Area */
 .input-container {
     background-color: #fff7e4;
-    padding: 1rem;
+    padding: 0.75rem;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -66,7 +65,7 @@ body {
     background-color: white;
     border: 1px solid #e2e8f0;
     border-radius: 0.5rem;
-    padding: 0.75rem;
+    padding: 0.5rem 0.75rem;
     width: 100%;
     transition: border-color 0.15s ease-in-out;
 }
@@ -83,8 +82,8 @@ body {
     color: white;
     border: none;
     border-radius: 9999px;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,8 +98,8 @@ body {
     background-color: white;
     border: 1px solid #e2e8f0;
     border-radius: 9999px;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,6 +108,20 @@ body {
 
 .help-button:hover {
     background-color: #f8fafc;
+}
+
+/* Scrollbar */
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: #fff2d4;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: #80a08c;
+    border-radius: 3px;
 }
 
 /* Responsive Design */
