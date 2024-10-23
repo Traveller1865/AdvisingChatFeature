@@ -1,0 +1,176 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<h2 class="mb-4">Calendar Management</h2>
+
+<div class="row g-4">
+    <!-- Calendar Integration Settings -->
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Google Calendar Integration</h5>
+                <p class="text-muted">Configure Google Calendar integration for automatic appointment syncing.</p>
+                <button class="btn btn-primary" disabled>
+                    <i class="fas fa-link me-2"></i>Connect Google Calendar
+                </button>
+                <small class="d-block mt-2 text-muted">Coming soon: Google Calendar integration for seamless appointment management.</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advisor Calendars -->
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Advisor Schedules</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Advisor</th>
+                                <th>Department</th>
+                                <th>Today's Appointments</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for advisor in advisors %}
+                            <tr>
+                                <td>{{ advisor.name }}</td>
+                                <td>{{ advisor.department }}</td>
+                                <td>
+                                    {% set today_appointments = appointments|selectattr("advisor_id", "equalto", advisor.id)|list %}
+                                    {{ today_appointments|length }} appointments
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#scheduleModal" data-advisor-id="{{ advisor.id }}">
+                                        <i class="fas fa-calendar-plus me-1"></i> Schedule
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Appointments -->
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Upcoming Appointments</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Student</th>
+                                <th>Advisor</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>{{ users[appointment.user_id].username }}</td>
+                                <td>{{ advisors|selectattr("id", "equalto", appointment.advisor_id)|first|attr("name") }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if appointment.status == 'Scheduled' else 'warning' }}">
+                                        {{ appointment.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="cancelAppointment({{ appointment.id }})">
+                                        <i class="fas fa-times me-1"></i> Cancel
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Appointment Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Schedule Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" method="POST" action="{{ url_for('admin_schedule_appointment') }}">
+                    <input type="hidden" id="advisorId" name="advisor_id">
+                    <div class="mb-3">
+                        <label for="studentSelect" class="form-label">Student</label>
+                        <select class="form-select" id="studentSelect" name="user_id" required>
+                            <option value="">Select a student...</option>
+                            {% for user in users if not user.is_admin %}
+                            <option value="{{ user.id }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointmentDate" class="form-label">Date and Time</label>
+                        <input type="datetime-local" class="form-control" id="appointmentDate" name="date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const scheduleModal = document.getElementById('scheduleModal');
+    if (scheduleModal) {
+        scheduleModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const advisorId = button.getAttribute('data-advisor-id');
+            document.getElementById('advisorId').value = advisorId;
+        });
+    }
+
+    window.cancelAppointment = function(appointmentId) {
+        if (confirm('Are you sure you want to cancel this appointment?')) {
+            fetch(`/admin/appointment/${appointmentId}/cancel`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to cancel appointment');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    throw new Error(data.error || 'Failed to cancel appointment');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to cancel appointment. Please try again.');
+            });
+        }
+    };
+});
+</script>
+{% endblock %}
