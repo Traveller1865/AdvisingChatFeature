@@ -8,14 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // FAQ Management
     function editFaq(faqId) {
+        if (!document.getElementById('editFaqModal')) return;
+        
         fetch(`/admin/faq/${faqId}`)
             .then(response => response.json())
             .then(data => {
+                const editForm = document.getElementById('editFaqForm');
+                if (!editForm) return;
+
                 document.getElementById('editFaqId').value = data.id;
                 document.getElementById('editQuestion').value = data.question;
                 document.getElementById('editAnswer').value = data.answer;
                 document.getElementById('editCategory').value = data.category;
-                document.getElementById('editFaqForm').action = `/admin/faq/${faqId}/edit`;
+                editForm.action = `/admin/faq/${faqId}/edit`;
                 const modal = new bootstrap.Modal(document.getElementById('editFaqModal'));
                 modal.show();
             })
@@ -45,14 +50,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Advisor Management
     function editAdvisor(advisorId) {
+        if (!document.getElementById('editAdvisorModal')) return;
+
         fetch(`/admin/advisor/${advisorId}`)
             .then(response => response.json())
             .then(data => {
+                const editForm = document.getElementById('editAdvisorForm');
+                if (!editForm) return;
+
                 document.getElementById('editAdvisorId').value = data.id;
                 document.getElementById('editName').value = data.name;
                 document.getElementById('editDepartment').value = data.department;
                 document.getElementById('editEmail').value = data.email;
-                document.getElementById('editAdvisorForm').action = `/admin/advisor/${advisorId}/edit`;
+                editForm.action = `/admin/advisor/${advisorId}/edit`;
                 const modal = new bootstrap.Modal(document.getElementById('editAdvisorModal'));
                 modal.show();
             })
