@@ -11,9 +11,12 @@ dependencies = [
     "en-core-web-sm",
     "flask",
     "numpy==1.24.3",
-    "spacy==3.5.0",
+    "spacy==3.5.3",
     "pyspellchecker>=0.8.1",
     "rasa>=0.1.1",
+    "rasa-sdk==3.6.2",
+    "transformers",
+    "tensorflow==2.13.0",
 ]
 
 [tool.uv.sources]

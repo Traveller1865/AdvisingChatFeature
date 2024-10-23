@@ -228,3 +228,57 @@ INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:11] "[32mGET / HTTP/1.1[0m"
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:11] "GET /login?next=/ HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:11] "GET /static/css/custom.css HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:11] "GET /static/images/university-logo-mark.svg HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:22] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:22] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:22] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:22] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:25:45] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.27:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:04] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:04] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:04] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:04] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.27:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:12] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:12] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:12] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:12] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.27:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:43] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:43] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:43] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:27:43] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.27:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:36] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:36] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:36] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:36] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.27:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:43] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:43] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:43] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:31:43] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:32:02] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:32:02] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:32:02] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:32:02] "GET /static/images/university-logo-mark.svg HTTP/1.1" 200 -

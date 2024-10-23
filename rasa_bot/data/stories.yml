@@ -1,0 +1,27 @@
+version: "3.1"
+
+stories:
+- story: registration path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: registration_info
+  - action: utter_registration_steps
+  - intent: thanks
+  - action: utter_welcome
+
+- story: appointment path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: appointment_request
+  - action: utter_appointment_info
+  - intent: thanks
+  - action: utter_welcome
+
+- story: deadline inquiry
+  steps:
+  - intent: deadline_query
+  - action: utter_deadlines
+  - intent: thanks
+  - action: utter_welcome

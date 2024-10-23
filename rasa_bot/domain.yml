@@ -1,0 +1,36 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - registration_info
+  - appointment_request
+  - deadline_query
+  - thanks
+  - bot_challenge
+
+responses:
+  utter_greet:
+  - text: "Hello! How can I help you with your academic needs today?"
+
+  utter_goodbye:
+  - text: "Goodbye! Have a great day!"
+
+  utter_iamabot:
+  - text: "I am a student advising chatbot, designed to help you with academic inquiries."
+
+  utter_welcome:
+  - text: "You're welcome! Is there anything else I can help you with?"
+
+  utter_registration_steps:
+  - text: "Here are the steps for course registration:\n1. Log in to your student portal\n2. Navigate to 'Course Registration'\n3. Browse available courses\n4. Select desired courses\n5. Confirm your selection\n\nWould you like to schedule an appointment with an advisor for more detailed guidance?"
+
+  utter_appointment_info:
+  - text: "I can help you schedule an appointment with an academic advisor. Would you like to see the list of available advisors?"
+
+  utter_deadlines:
+  - text: "For the current semester:\nRegistration deadline: October 31, 2024\nLate registration: November 1-7, 2024 (additional fee applies)\n\nWould you like to know about other important dates?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

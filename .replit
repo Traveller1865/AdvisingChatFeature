@@ -35,6 +35,10 @@ args = "Add Calendar FAQs"
 task = "workflow.run"
 args = "Add Sample Advisors"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Train Rasa Model"
+
 [[workflows.workflow]]
 name = "Download spaCy model"
 author = "agent"
@@ -101,6 +105,17 @@ agentRequireRestartOnSave = false
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python add_sample_advisors.py"
+
+[[workflows.workflow]]
+name = "Train Rasa Model"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python train_rasa.py"
 
 [deployment]
 run = ["sh", "-c", "python -m spacy download en_core_web_sm"]

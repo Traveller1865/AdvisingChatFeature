@@ -1,0 +1,56 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - greetings
+    - good morning
+    - good evening
+    - hey there
+
+- intent: registration_info
+  examples: |
+    - how do I register for classes
+    - what's the registration process
+    - tell me about course registration
+    - help me register for courses
+    - registration steps
+    - how to sign up for classes
+    - class registration procedure
+
+- intent: appointment_request
+  examples: |
+    - I want to meet with an advisor
+    - can I schedule an appointment
+    - book a meeting with advisor
+    - need to talk to an advisor
+    - schedule advisor meeting
+    - make an appointment
+
+- intent: deadline_query
+  examples: |
+    - when is the registration deadline
+    - what's the last day to register
+    - registration cutoff date
+    - deadline for course registration
+    - last date to sign up
+    - when do I need to register by
+
+- intent: thanks
+  examples: |
+    - thanks
+    - thank you
+    - appreciate it
+    - thanks a lot
+    - thank you very much
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you later
+    - good night
+    - bye bye
+    - have a nice day
