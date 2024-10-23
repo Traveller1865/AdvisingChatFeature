@@ -15,9 +15,3 @@ def authenticate_user(username, password):
         login_user(user)
         return True
     return False
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))

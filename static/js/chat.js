@@ -1,22 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize time display
-    function updateTimeDisplay() {
+    // Update time and date
+    function updateDateTime() {
         const timeElement = document.getElementById('current-time');
         const dateElement = document.getElementById('current-date');
-        
         if (timeElement && dateElement) {
             const now = new Date();
-            timeElement.textContent = now.toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit'
-            });
+            timeElement.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             dateElement.textContent = now.toLocaleDateString();
         }
     }
-
+    
     // Update time every minute
-    updateTimeDisplay();
-    const timeInterval = setInterval(updateTimeDisplay, 60000);
+    updateDateTime();
+    const timeInterval = setInterval(updateDateTime, 60000);
 
     // Chat functionality
     const chatForm = document.getElementById('chat-form');
@@ -36,8 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addMessage(sender, message) {
-        if (!chatMessages) return;
-        
         const messageContainer = document.createElement('div');
         messageContainer.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`;
         
@@ -53,24 +47,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function sendMessage(message) {
-        fetch('/chat', {
+        fetch('/chat/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `message=${encodeURIComponent(message)}`,
+            body: 'message=' + encodeURIComponent(message)
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error('Network response was not ok: ' + response.status);
             }
             return response.json();
         })
         .then(data => {
-            if (data.response) {
+            if (data && data.response) {
                 addMessage('bot', data.response);
+            } else if (data && data.error) {
+                throw new Error('Server error: ' + data.error);
             } else {
-                throw new Error('Invalid response format');
+                throw new Error('Invalid response from server');
             }
         })
         .catch(error => {

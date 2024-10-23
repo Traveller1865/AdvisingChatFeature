@@ -12,7 +12,7 @@
         {% block content %}{% endblock %}
     </div>
     
-    {% if request.endpoint == 'index' %}
+    {% if request.endpoint == 'chat' %}
     <script defer src="{{ url_for('static', filename='js/chat.js') }}"></script>
     {% endif %}
 </body>
