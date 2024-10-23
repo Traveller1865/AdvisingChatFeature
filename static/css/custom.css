@@ -43,6 +43,29 @@ body {
     margin-left: 10px;
 }
 
+.input-group {
+    border: 2px solid #80a08c;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+}
+
+#user-input {
+    border: none;
+    background-color: white;
+    margin-right: 10px;
+}
+
+#chat-form button {
+    background-color: #80a08c;
+    border-color: #80a08c;
+}
+
+#chat-form button:hover {
+    background-color: #6b8a76;
+    border-color: #6b8a76;
+}
+
 footer {
     background-color: #fff7e4;
     padding: 1rem 0;
