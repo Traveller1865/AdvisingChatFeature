@@ -471,3 +471,7 @@ INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:39] "GET /chat HTTP/1.1" 200 
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:39] "GET /static/css/custom.css HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:39] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:39] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:51] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:51] "GET /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:51] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 04:02:51] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
