@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<h2 class="mb-4">Manage FAQs</h2>
+<button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addFaqModal">
+    Add New FAQ
+</button>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for faq in faqs %}
+            <tr>
+                <td>{{ faq.question }}</td>
+                <td>{{ faq.category }}</td>
+                <td>
+                    <button class="btn btn-sm btn-secondary" onclick="editFaq({{ faq.id }})">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteFaq({{ faq.id }})">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Add FAQ Modal -->
+<div class="modal fade" id="addFaqModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New FAQ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addFaqForm" method="POST" action="{{ url_for('admin_add_faq') }}">
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Question</label>
+                        <input type="text" class="form-control" id="question" name="question" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="answer" class="form-label">Answer</label>
+                        <textarea class="form-control" id="answer" name="answer" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="category" name="category" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add FAQ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit FAQ Modal -->
+<div class="modal fade" id="editFaqModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit FAQ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editFaqForm" method="POST">
+                    <input type="hidden" id="editFaqId" name="faq_id">
+                    <div class="mb-3">
+                        <label for="editQuestion" class="form-label">Question</label>
+                        <input type="text" class="form-control" id="editQuestion" name="question" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAnswer" class="form-label">Answer</label>
+                        <textarea class="form-control" id="editAnswer" name="answer" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCategory" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="editCategory" name="category" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update FAQ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

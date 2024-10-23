@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">FAQs</h5>
+                <p class="card-text">Total FAQs: {{ faq_count }}</p>
+                <a href="{{ url_for('admin_faqs') }}" class="btn btn-primary">Manage FAQs</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Advisors</h5>
+                <p class="card-text">Total Advisors: {{ advisor_count }}</p>
+                <a href="{{ url_for('admin_advisors') }}" class="btn btn-primary">Manage Advisors</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
