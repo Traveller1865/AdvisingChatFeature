@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userInput = document.getElementById('user-input');
     const chatMessages = document.getElementById('chat-messages');
 
-    // Check if we're on the chat page (elements exist)
+    // Only initialize chat functionality if all required elements exist
     if (chatForm && userInput && chatMessages) {
         function addMessage(sender, message) {
             const messageDiv = document.createElement('div');
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => console.error('Error logging failed:', err));
         }
 
+        // Add event listener only if we're on the chat page
         chatForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const message = userInput.value.trim();
