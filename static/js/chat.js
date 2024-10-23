@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Only initialize chat if we're on the chat page
-    const chatContainer = document.querySelector('.chatbot-container');
+    const chatContainer = document.querySelector('#chat-messages');
     if (!chatContainer) {
         console.log('Not on chat page, skipping initialization');
         return;
@@ -61,11 +61,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add message to chat
     function addMessage(sender, message) {
         try {
+            const messageContainer = document.createElement('div');
+            messageContainer.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`;
+            
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message-bubble ${sender}`;
+            messageDiv.className = `rounded-lg px-4 py-2 max-w-[80%] ${
+                sender === 'user' ? 'bg-primary text-white' : 'bg-[#fff7e4] text-blue-900'
+            }`;
             messageDiv.textContent = message;
             
-            elements.chatMessages.appendChild(messageDiv);
+            messageContainer.appendChild(messageDiv);
+            elements.chatMessages.appendChild(messageContainer);
             elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
         } catch (error) {
             console.error('Error adding message to chat:', error);
