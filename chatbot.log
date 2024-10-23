@@ -107,3 +107,109 @@ INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:00:15] "POST /chat HTTP/1.1" 200
 INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:25] "[32mGET / HTTP/1.1[0m" 302 -
 INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:25] "GET /login?next=/ HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:25] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:40] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:40] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:02:40] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:05:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:05:58] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.99 - - [21/Oct/2024 20:05:58] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:46:52] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:46:53] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:46:53] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+ERROR:app:Exception on /logout [GET]
+Traceback (most recent call last):
+  File "/home/runner/StudentAdvisorBot/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/StudentAdvisorBot/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/StudentAdvisorBot/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/StudentAdvisorBot/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/StudentAdvisorBot/.pythonlibs/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/StudentAdvisorBot/auth.py", line 23, in logout
+    return redirect(url_for('login'))
+           ^^^^^^^^
+NameError: name 'redirect' is not defined
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:12] "[35m[1mGET /logout HTTP/1.1[0m" 500 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:16] "[32mGET /logout HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:16] "GET /login?next=/logout HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:16] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:18] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:18] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:18] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:52] "[33mGET /base HTTP/1.1[0m" 404 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:55] "[33mGET /base HTTP/1.1[0m" 404 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:56] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:47:57] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:51:06] "[32mPOST /login?next=/ HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:51:06] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:51:06] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 02:51:06] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:03:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:03:57] "[33mGET /static/js/script.js HTTP/1.1[0m" 404 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:03:57] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:03:57] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:09:44] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:09:44] "[33mGET /static/js/script.js HTTP/1.1[0m" 404 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:09:44] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:09:44] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:13:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:13:48] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:13:48] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:16] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:16] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:55] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:55] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:15:55] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:19:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:19:56] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:24:40] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:24:40] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:24:45] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:24:45] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:25:29] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:25:29] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:25:29] "GET /static/css/custom.css HTTP/1.1" 200 -

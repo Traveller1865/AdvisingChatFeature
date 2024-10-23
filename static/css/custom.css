@@ -1,21 +1,50 @@
-/* Custom styles */
-#chat-container {
-    background-color: var(--bs-dark);
-    color: var(--bs-light);
+/* General Styling */
+body {
+    background-color: #f8f9fa; /* White background */
 }
 
-.message {
+/* Chatbot Container Styling */
+.chatbot-container {
+    background-color: #fff7e4; /* Off-yellow background */
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Header Styling */
+.chatbot-header {
+    background-color: #80a08c; /* Green header */
+    color: white;
+    padding: 1rem;
+}
+
+/* Message Bubbles */
+.message-bubble {
     margin-bottom: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.user-message {
-    background-color: var(--bs-primary);
-    align-self: flex-end;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 75%;
 }
 
 .bot-message {
-    background-color: var(--bs-secondary);
+    background-color: rgba(255, 255, 255, 0.8); /* Light text bubbles */
     align-self: flex-start;
+    color: #333;
+}
+
+.user-message {
+    background-color: #007bff; /* Blue user bubble */
+    color: white;
+    align-self: flex-end;
+}
+
+/* Chat Messages Section */
+.chatbot-messages {
+    height: 300px;
+    overflow-y: auto;
+}
+
+/* Footer Input Form */
+.chatbot-footer {
+    background-color: #fff7e4;
+    padding: 0.5rem;
 }

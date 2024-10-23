@@ -1,21 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <div id="chat-container" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: auto;">
-            <div id="chat-messages"></div>
-        </div>
-        <form id="chat-form">
-            <div class="input-group">
-                <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
-                <button type="submit" class="btn btn-primary">Send</button>
+<div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6">
+        <!-- Chatbot Container -->
+        <div class="chatbot-container shadow-lg">
+            <div class="chatbot-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 199 181" fill="none" class="chatbot-icon">
+                        <path d="M0.5 0L17.0537 21.6947C18.6661..." fill="white"></path>
+                        <path d="M188.018 5.22466L177.806..." fill="#1A5632"></path>
+                        <path d="M55.157 144.421C57.898..." fill="#FFC629"></path>
+                        <path d="M115.142 57.4799C115.142..." fill="white"></path>
+                    </svg>
+                    <div class="ms-3">
+                        <h2 class="chatbot-name mb-0">Student Advising Chatbot</h2>
+                        <div class="chatbot-info d-flex align-items-center">
+                            <svg class="icon me-2" width="20" height="20" fill="currentColor" stroke="currentColor">
+                                <circle cx="10" cy="10" r="9"></circle>
+                                <polyline points="10 4 10 10 14 12"></polyline>
+                            </svg>
+                            <span>09:59 PM</span>
+                            <svg class="icon ms-3 me-2" width="20" height="20" fill="currentColor" stroke="currentColor">
+                                <rect width="18" height="18" x="1" y="3" rx="2"></rect>
+                                <path d="M6 1v4 M14 1v4 M1 8h18"></path>
+                            </svg>
+                            <span>10/22/2024</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="logout-button btn btn-outline-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" x2="9" y1="12" y2="12"></line>
+                    </svg>
+                </button>
             </div>
-        </form>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="chatbot-messages p-3">
+                <div class="message-bubble bot-message">
+                    <div class="message-content">Welcome to the Student Advising Chatbot! How can I assist you today?</div>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <div class="chatbot-footer">
+                <form id="chat-form" class="d-flex align-items-center p-2">
+                    <input type="text" id="user-input" class="form-control me-2" placeholder="Type your message...">
+                    <button type="submit" class="btn btn-primary rounded-circle me-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor">
+                            <path d="M22 2L15 22 11 13 2 9z"></path>
+                            <path d="M22 2L11 13"></path>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-secondary rounded-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor">
+                            <circle cx="10" cy="10" r="9"></circle>
+                            <path d="M9 9a3 3 0 1 1 3 5.83 3 3 0 1 1-3-5.83z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 {% endblock %}
