@@ -292,3 +292,9 @@ INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:15] "[32mGET / HTTP/1.1[0m"
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:15] "GET /login?next=/ HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:15] "GET /static/css/custom.css HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:15] "GET /static/images/university-logo-mark.svg HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:26] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:26] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:26] "[36mGET /static/images/university-logo-mark.svg HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:26] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:39] "POST /chat HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.27 - - [23/Oct/2024 04:33:45] "POST /chat HTTP/1.1" 200 -
