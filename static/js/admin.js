@@ -1,9 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+    // Check if we're on an admin page
+    const adminContent = document.querySelector('.container .row .col-md-9');
+    if (!adminContent) return;  // Exit if not on admin page
+
+    // Initialize admin functionality only if we're on an admin page
+    initializeAdminFunctionality();
+});
+
+function initializeAdminFunctionality() {
+    // Initialize tooltips if Bootstrap is loaded
+    if (typeof bootstrap !== 'undefined') {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
 
     // Error handling function
     function handleError(error, customMessage) {
@@ -30,6 +41,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 5000);
         }
     }
+
+    // Initialize forms with null checks
+    const forms = {
+        addFaq: document.getElementById('addFaqForm'),
+        editFaq: document.getElementById('editFaqForm'),
+        addAdvisor: document.getElementById('addAdvisorForm'),
+        editAdvisor: document.getElementById('editAdvisorForm'),
+        scheduleForm: document.getElementById('scheduleForm')
+    };
+
+    Object.entries(forms).forEach(([formName, form]) => {
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Form submission failed');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        throw new Error(data.error || 'Form submission failed');
+                    }
+                })
+                .catch(error => handleError(error, 'Failed to submit form'));
+            });
+        }
+    });
 
     // FAQ Management
     window.editFaq = function(faqId) {
@@ -129,38 +178,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Form submission handlers
-    const addFaqForm = document.getElementById('addFaqForm');
-    const editFaqForm = document.getElementById('editFaqForm');
-    const addAdvisorForm = document.getElementById('addAdvisorForm');
-    const editAdvisorForm = document.getElementById('editAdvisorForm');
-
-    [addFaqForm, editFaqForm, addAdvisorForm, editAdvisorForm].forEach(form => {
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Form submission failed');
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        throw new Error(data.error || 'Form submission failed');
-                    }
-                })
-                .catch(error => handleError(error, 'Failed to submit form'));
-            });
+    // Calendar Management
+    window.cancelAppointment = function(appointmentId) {
+        if (confirm('Are you sure you want to cancel this appointment?')) {
+            fetch(`/admin/appointment/${appointmentId}/cancel`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to cancel appointment');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    throw new Error(data.error || 'Failed to cancel appointment');
+                }
+            })
+            .catch(error => handleError(error, 'Failed to cancel appointment'));
         }
-    });
+    };
+
+    // Schedule modal initialization
+    const scheduleModal = document.getElementById('scheduleModal');
+    if (scheduleModal) {
+        scheduleModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const advisorId = button.getAttribute('data-advisor-id');
+            document.getElementById('advisorId').value = advisorId;
+        });
+    }
 });

@@ -76,32 +76,185 @@ def chat():
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
-    faq_count = FAQ.query.count()
-    advisor_count = Advisor.query.count()
-    return render_template('admin/dashboard.html',
-                         active_page='dashboard',
-                         faq_count=faq_count,
-                         advisor_count=advisor_count)
+    try:
+        faq_count = FAQ.query.count()
+        advisor_count = Advisor.query.count()
+        return render_template('admin/dashboard.html',
+                            active_page='dashboard',
+                            faq_count=faq_count,
+                            advisor_count=advisor_count)
+    except Exception as e:
+        logging.error(f"Admin dashboard error: {str(e)}")
+        return render_template('error.html', error="An error occurred loading the admin dashboard"), 500
+
+@app.route('/admin/faqs')
+@admin_required
+def admin_faqs():
+    try:
+        faqs = FAQ.query.all()
+        return render_template('admin/faqs.html', active_page='faqs', faqs=faqs)
+    except Exception as e:
+        logging.error(f"Error loading FAQs: {str(e)}")
+        return render_template('error.html', error="An error occurred loading the FAQs"), 500
+
+@app.route('/admin/advisors')
+@admin_required
+def admin_advisors():
+    try:
+        advisors = Advisor.query.all()
+        return render_template('admin/advisors.html', active_page='advisors', advisors=advisors)
+    except Exception as e:
+        logging.error(f"Error loading advisors: {str(e)}")
+        return render_template('error.html', error="An error occurred loading the advisors"), 500
+
+# FAQ CRUD operations
+@app.route('/admin/faq/add', methods=['POST'])
+@admin_required
+def admin_add_faq():
+    try:
+        new_faq = FAQ(
+            question=request.form['question'],
+            answer=request.form['answer'],
+            category=request.form['category']
+        )
+        db.session.add(new_faq)
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error adding FAQ: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/admin/faq/<int:faq_id>')
+@admin_required
+def admin_get_faq(faq_id):
+    try:
+        faq = FAQ.query.get_or_404(faq_id)
+        return jsonify({
+            'id': faq.id,
+            'question': faq.question,
+            'answer': faq.answer,
+            'category': faq.category
+        })
+    except Exception as e:
+        logging.error(f"Error getting FAQ {faq_id}: {str(e)}")
+        return jsonify({'error': str(e)}), 404
+
+@app.route('/admin/faq/<int:faq_id>/edit', methods=['POST'])
+@admin_required
+def admin_edit_faq(faq_id):
+    try:
+        faq = FAQ.query.get_or_404(faq_id)
+        faq.question = request.form['question']
+        faq.answer = request.form['answer']
+        faq.category = request.form['category']
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error editing FAQ {faq_id}: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/admin/faq/<int:faq_id>/delete', methods=['POST'])
+@admin_required
+def admin_delete_faq(faq_id):
+    try:
+        faq = FAQ.query.get_or_404(faq_id)
+        db.session.delete(faq)
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error deleting FAQ {faq_id}: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+# Advisor CRUD operations
+@app.route('/admin/advisor/add', methods=['POST'])
+@admin_required
+def admin_add_advisor():
+    try:
+        new_advisor = Advisor(
+            name=request.form['name'],
+            department=request.form['department'],
+            email=request.form['email']
+        )
+        db.session.add(new_advisor)
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error adding advisor: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/admin/advisor/<int:advisor_id>')
+@admin_required
+def admin_get_advisor(advisor_id):
+    try:
+        advisor = Advisor.query.get_or_404(advisor_id)
+        return jsonify({
+            'id': advisor.id,
+            'name': advisor.name,
+            'department': advisor.department,
+            'email': advisor.email
+        })
+    except Exception as e:
+        logging.error(f"Error getting advisor {advisor_id}: {str(e)}")
+        return jsonify({'error': str(e)}), 404
+
+@app.route('/admin/advisor/<int:advisor_id>/edit', methods=['POST'])
+@admin_required
+def admin_edit_advisor(advisor_id):
+    try:
+        advisor = Advisor.query.get_or_404(advisor_id)
+        advisor.name = request.form['name']
+        advisor.department = request.form['department']
+        advisor.email = request.form['email']
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error editing advisor {advisor_id}: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/admin/advisor/<int:advisor_id>/delete', methods=['POST'])
+@admin_required
+def admin_delete_advisor(advisor_id):
+    try:
+        advisor = Advisor.query.get_or_404(advisor_id)
+        db.session.delete(advisor)
+        db.session.commit()
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error deleting advisor {advisor_id}: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/admin/calendar')
 @admin_required
 def admin_calendar():
-    advisors = Advisor.query.all()
-    appointments = Appointment.query.filter(
-        Appointment.date >= datetime.now()
-    ).order_by(Appointment.date).all()
-    users = {user.id: user for user in User.query.all()}
-    return render_template('admin/calendar.html',
-                         active_page='calendar',
-                         advisors=advisors,
-                         appointments=appointments,
-                         users=users)
+    try:
+        advisors = Advisor.query.all()
+        appointments = Appointment.query.filter(
+            Appointment.date >= datetime.now()
+        ).order_by(Appointment.date).all()
+        users = {user.id: user for user in User.query.all()}
+        return render_template('admin/calendar.html',
+                            active_page='calendar',
+                            advisors=advisors,
+                            appointments=appointments,
+                            users=users)
+    except Exception as e:
+        logging.error(f"Error loading calendar: {str(e)}")
+        return render_template('error.html', error="An error occurred loading the calendar"), 500
 
 @app.route('/admin/appointment/schedule', methods=['POST'])
 @admin_required
 def admin_schedule_appointment():
     try:
         date_str = request.form.get('date')
+        if not date_str:
+            raise ValueError("Date is required")
+            
         appointment_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M')
         
         new_appointment = Appointment(
@@ -115,6 +268,7 @@ def admin_schedule_appointment():
         return jsonify({'success': True})
     except Exception as e:
         db.session.rollback()
+        logging.error(f"Error scheduling appointment: {str(e)}")
         return jsonify({'success': False, 'error': str(e)})
 
 @app.route('/admin/appointment/<int:appointment_id>/cancel', methods=['POST'])
@@ -127,6 +281,15 @@ def admin_cancel_appointment(appointment_id):
         return jsonify({'success': True})
     except Exception as e:
         db.session.rollback()
+        logging.error(f"Error canceling appointment {appointment_id}: {str(e)}")
         return jsonify({'success': False, 'error': str(e)})
 
-# [Previous routes remain unchanged...]
+@app.route('/log_error', methods=['POST'])
+@login_required
+def log_error():
+    error_data = request.json
+    if error_data and 'error' in error_data:
+        logging.error(f"Client-side error: {error_data['error']}")
+        return jsonify({'message': 'Error logged successfully'}), 200
+    else:
+        return jsonify({'error': 'Invalid error data'}), 400
