@@ -13,6 +13,7 @@ dependencies = [
     "numpy==1.24.3",
     "spacy==3.5.0",
     "pyspellchecker>=0.8.1",
+    "rasa>=0.1.1",
 ]
 
 [tool.uv.sources]
