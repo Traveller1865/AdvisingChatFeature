@@ -1,59 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="rounded-lg border text-card-foreground w-full max-w-2xl mx-auto h-[600px] flex flex-col shadow-lg bg-white">
-    <!-- Banner/Header -->
-    <div class="p-6 flex flex-row items-center justify-between space-y-0 pb-2 bg-[#80a08c] text-white">
-        <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 199 181" fill="none" class="rounded-full bg-white p-1">
-                <path d="M0.5 0L17.0537 21.6947C18.6661 23.8061 19.5261 26.3925 19.5261 28.979V117.025C19.5261 137.03 31.7264 153.552 50.5912 159.147C63.7052 163.053 85.5261 163.792 95.3616 175.933L99.5 181L103.638 175.933C113.528 163.792 135.295 163.053 148.409 159.147C167.274 153.552 179.474 137.03 179.474 117.025V28.979C179.474 26.3398 180.334 23.7533 181.946 21.6947L198.5 0H0.5Z" fill="white"></path>
-                <path d="M188.018 5.22466L177.806 18.6321C175.495 21.6408 174.259 25.283 174.259 29.0307V117.076C174.259 134.601 163.993 149.17 146.956 154.237C134.057 158.037 110.838 158.882 99.5517 172.764C88.2651 158.882 65.0469 158.09 52.1478 154.237C35.0566 149.117 24.8449 134.548 24.8449 117.023V28.9779C24.8449 25.2302 23.6087 21.588 21.2977 18.5793L11.0859 5.17188H188.018V5.22466Z" fill="#1A5632"></path>
-                <path d="M55.157 144.421C57.898 145.213 61.499 145.952 65.3149 146.691C75.9566 148.802 89.1244 151.441 99.5511 158.778C109.924 151.441 123.092 148.802 133.787 146.691C137.603 145.952 141.258 145.213 143.945 144.421C156.253 140.779 163.885 130.274 163.885 117.025V28.9798C163.885 24.2292 165.175 19.5313 167.54 15.4141H31.5625C33.9273 19.5313 35.2172 24.2292 35.2172 28.9798V117.025C35.2172 130.274 42.8491 140.779 55.157 144.421Z" fill="#FFC629"></path>
-            </svg>
-            <div>
-                <h2 class="text-2xl font-bold">Student Advising Chatbot</h2>
-                <div class="flex items-center text-sm space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide-clock h-4 w-4">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <span id="current-time">Loading...</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="lucide-calendar h-4 w-4 ml-2">
-                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                        <path d="M3 10h18"></path>
-                    </svg>
-                    <span id="current-date">Loading...</span>
+<div class="chatbot-container mx-auto shadow-lg max-w-2xl">
+    <!-- Header -->
+    <div class="chatbot-header">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="header-logo">
+                <div>
+                    <h2 class="text-2xl font-bold">Student Advising Chatbot</h2>
+                    <div class="flex items-center text-sm space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="lucide-clock">
+                            <circle cx="8" cy="8" r="7"></circle>
+                            <polyline points="8 4 8 8 10 9"></polyline>
+                        </svg>
+                        <span id="current-time">Loading...</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="lucide-calendar ml-2">
+                            <rect width="14" height="14" x="1" y="1" rx="2"></rect>
+                            <path d="M1 6h14"></path>
+                        </svg>
+                        <span id="current-date">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button class="inline-flex items-center justify-center rounded-md bg-secondary h-10 w-10 text-secondary-foreground hover:bg-secondary/80">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" x2="9" y1="12" y2="12"></line>
-            </svg>
-        </button>
-    </div>
-    
-    <!-- Chat Messages Section -->
-    <div id="chat-messages" class="p-6 flex-grow overflow-auto py-6 bg-[#fff2d4]">
-        <div class="space-y-4">
-            <div class="flex justify-start">
-                <div class="rounded-lg px-4 py-2 max-w-[80%] bg-[#fff7e4] text-blue-900">
-                    Welcome to the Student Advising Chatbot! How can I assist you today?
-                </div>
-            </div>
+            <button class="help-button" aria-label="Logout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" x2="9" y1="12" y2="12"></line>
+                </svg>
+            </button>
         </div>
     </div>
     
-    <!-- Input Form Section -->
-    <div class="flex items-center p-6 pt-0 bg-[#fff7e4]">
-        <form id="chat-form" class="flex w-full items-center space-x-2 pt-4">
-            <input type="text" id="user-input" class="flex h-10 w-full rounded-md border px-3 py-2 text-sm bg-white placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring" placeholder="Type your message..." />
-            <button type="submit" class="inline-flex items-center justify-center rounded-full bg-primary h-10 w-10 text-primary-foreground hover:bg-primary/90">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Messages Area -->
+    <div id="chat-messages" class="messages-container">
+        <div class="message-bubble bot">
+            Welcome to the Student Advising Chatbot! How can I assist you today?
+        </div>
+    </div>
+    
+    <!-- Input Area -->
+    <div class="input-container">
+        <form id="chat-form" class="flex items-center space-x-2">
+            <input type="text" id="user-input" class="input-field" placeholder="Type your message..." />
+            <button type="submit" class="send-button" aria-label="Send message">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m22 2-7 20-4-9-9-4Z"></path>
                     <path d="M22 2 11 13"></path>
+                </svg>
+            </button>
+            <button type="button" class="help-button" aria-label="Help">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="10" cy="10" r="8"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <path d="M12 17h.01"></path>
                 </svg>
             </button>
         </form>

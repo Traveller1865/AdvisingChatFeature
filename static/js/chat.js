@@ -1,81 +1,73 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements with error handling
-    const chatForm = document.getElementById('chat-form');
-    const userInput = document.getElementById('user-input');
-    const chatMessages = document.getElementById('chat-messages');
-    const timeElement = document.getElementById('current-time');
-    const dateElement = document.getElementById('current-date');
+// Wait for DOM content to be loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeChat);
+} else {
+    initializeChat();
+}
 
-    // Verify required elements exist
-    const requiredElements = {
-        'chat-form': chatForm,
-        'user-input': userInput,
-        'chat-messages': chatMessages
+function initializeChat() {
+    // Get DOM elements with error handling
+    const elements = {
+        chatForm: document.getElementById('chat-form'),
+        userInput: document.getElementById('user-input'),
+        chatMessages: document.getElementById('chat-messages'),
+        timeElement: document.getElementById('current-time'),
+        dateElement: document.getElementById('current-date')
     };
 
-    // Check for missing elements
-    const missingElements = Object.entries(requiredElements)
-        .filter(([_, element]) => !element)
-        .map(([id]) => id);
+    // Verify required elements exist
+    const requiredElements = ['chatForm', 'userInput', 'chatMessages'];
+    const missingElements = requiredElements.filter(key => !elements[key]);
 
     if (missingElements.length > 0) {
         console.error('Missing required elements:', missingElements.join(', '));
         return;
     }
 
-    // Initialize chat interface
-    function initializeChatInterface() {
-        if (!timeElement || !dateElement) {
-            console.warn('Time/date elements not found. Time display will be disabled.');
-            return;
+    // Initialize time display
+    function updateTimeDisplay() {
+        if (elements.timeElement && elements.dateElement) {
+            const now = new Date();
+            elements.timeElement.textContent = now.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            elements.dateElement.textContent = now.toLocaleDateString();
         }
-
-        const now = new Date();
-        timeElement.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        dateElement.textContent = now.toLocaleDateString();
     }
 
-    // Update time and date initially and every minute
-    initializeChatInterface();
-    const timeUpdateInterval = setInterval(initializeChatInterface, 60000);
+    // Update time display initially and start interval
+    updateTimeDisplay();
+    const timeInterval = setInterval(updateTimeDisplay, 60000);
 
-    // Cleanup interval on page unload
+    // Cleanup on page unload
     window.addEventListener('unload', () => {
-        clearInterval(timeUpdateInterval);
+        clearInterval(timeInterval);
     });
 
     // Handle message submission
-    chatForm.addEventListener('submit', function(e) {
+    elements.chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const message = userInput.value.trim();
+        const message = elements.userInput.value.trim();
         if (message) {
             addMessage('user', message);
             sendMessage(message);
-            userInput.value = '';
+            elements.userInput.value = '';
         }
     });
 
     // Add message to chat
     function addMessage(sender, message) {
         try {
-            const messageContainer = document.createElement('div');
-            messageContainer.classList.add('flex', sender === 'user' ? 'justify-end' : 'justify-start', 'mb-4');
-            
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add(
-                'rounded-lg',
-                'px-4',
-                'py-2',
-                'max-w-[80%]',
-                sender === 'user' ? 'bg-primary text-white' : 'bg-[#fff7e4] text-blue-900'
-            );
+            messageDiv.className = `message-bubble ${sender}`;
             messageDiv.textContent = message;
             
-            messageContainer.appendChild(messageDiv);
-            chatMessages.appendChild(messageContainer);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            elements.chatMessages.appendChild(messageDiv);
+            elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
         } catch (error) {
             console.error('Error adding message to chat:', error);
+            logError('Failed to add message to chat');
         }
     }
 
@@ -98,20 +90,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.response) {
                 addMessage('bot', data.response);
             } else {
-                throw new Error('Unexpected response format');
+                throw new Error('Invalid response format');
             }
         })
         .catch(error => {
             console.error('Error:', error);
             addMessage('bot', 'There was an error. Please try again later.');
-            // Log client-side error
-            fetch('/log_error', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ error: error.message }),
-            }).catch(err => console.error('Error logging:', err));
+            logError(error.message);
         });
     }
-});
+
+    // Log client-side errors
+    function logError(errorMessage) {
+        fetch('/log_error', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ error: errorMessage }),
+        }).catch(err => console.error('Error logging:', err));
+    }
+}
