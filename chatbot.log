@@ -290,3 +290,17 @@ INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:01] "GET /static/js/chat.js H
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:04] "[32mGET / HTTP/1.1[0m" 302 -
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:04] "GET /login?next=/ HTTP/1.1" 200 -
 INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:04] "GET /static/css/custom.css HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:15] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:15] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:44:15] "[36mGET /static/js/chat.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.196.79:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "[36mGET /static/css/custom.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "GET /static/js/chat.js HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "[32mGET / HTTP/1.1[0m" 302 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "GET /login?next=/ HTTP/1.1" 200 -
+INFO:werkzeug:172.31.196.79 - - [23/Oct/2024 03:45:41] "GET /static/css/custom.css HTTP/1.1" 200 -
