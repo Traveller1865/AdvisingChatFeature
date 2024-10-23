@@ -1,35 +1,25 @@
-import spacy
+import re
 from models import FAQ, Advisor
 from app import db
-from spellchecker import SpellChecker
-
-nlp = spacy.load("en_core_web_sm")
-spell = SpellChecker()
 
 def get_intent(text):
-    if not text or not text.strip():
+    if not text or not isinstance(text, str):
         return "empty_input"
     
-    doc = nlp(text.lower())
-    
-    # Simple intent recognition based on keywords
-    if any(token.text in ["drop", "withdraw"] for token in doc):
+    text = text.lower()
+    # Simple keyword-based intent recognition
+    if any(word in text for word in ["drop", "withdraw"]):
         return "drop_class"
-    elif any(token.text in ["register", "enroll", "sign up"] for token in doc):
+    elif any(word in text for word in ["register", "enroll", "sign up"]):
         return "register_class"
-    elif any(token.text in ["advisor", "appointment", "schedule"] for token in doc):
+    elif any(word in text for word in ["advisor", "appointment", "schedule"]):
         return "schedule_appointment"
-    elif any(token.text in ["calendar", "date", "deadline", "semester", "exam"] for token in doc):
+    elif any(word in text for word in ["calendar", "date", "deadline", "semester", "exam"]):
         return "calendar_query"
-    elif any(token.text in ["count", "how many", "number of"] for token in doc) and "advisor" in text.lower():
+    elif ("count" in text or "how many" in text) and "advisor" in text:
         return "count_advisors"
     else:
         return "general_question"
-
-def extract_date_entities(text):
-    doc = nlp(text)
-    date_entities = [ent.text for ent in doc.ents if ent.label_ == "DATE"]
-    return date_entities
 
 def get_response(intent, text):
     if intent == "empty_input":
@@ -50,17 +40,20 @@ def get_response(intent, text):
             return "I apologize, but there are currently no advisors available in the system. Please check back later or contact the advising office directly."
 
     elif intent == "calendar_query":
-        date_entities = extract_date_entities(text)
+        # Simple date extraction using regex for common formats
+        date_pattern = r'\b\d{1,2}/\d{1,2}/\d{2,4}\b|\b\d{4}-\d{1,2}-\d{1,2}\b'
+        dates = re.findall(date_pattern, text)
+        
         faqs = FAQ.query.filter(FAQ.category == "Academic Calendar").all()
         
-        for faq in faqs:
-            if any(entity.lower() in faq.question.lower() for entity in date_entities):
-                return faq.answer
+        if dates and faqs:
+            relevant_faqs = [faq for faq in faqs if any(date in faq.question or date in faq.answer for date in dates)]
+            if relevant_faqs:
+                return relevant_faqs[0].answer
         
         # If no specific match is found, return a general calendar response
-        return "I couldn't find a specific answer to your calendar query. Here's a summary of important dates:\n\n" + \
-               "\n".join([f"{faq.question}: {faq.answer}" for faq in faqs]) + \
-               "\n\nFor more detailed information, please check the official academic calendar on our website or contact an advisor."
+        return "Here are the important academic dates:\n\n" + \
+               "\n".join([f"• {faq.question}: {faq.answer}" for faq in faqs])
 
     elif intent == "count_advisors":
         advisor_count = Advisor.query.count()
@@ -72,36 +65,24 @@ def get_response(intent, text):
             return f"There are currently {advisor_count} advisors available in our system."
 
     else:
-        # Search FAQ database for relevant answer
-        keywords = [token.lemma_ for token in nlp(text) if not token.is_stop and token.is_alpha]
-        if keywords:
-            faqs = FAQ.query.filter(FAQ.question.contains(keywords[0])).all()
-            if faqs:
-                return faqs[0].answer
+        # Search FAQ database for relevant answer using simple keyword matching
+        words = set(text.lower().split())
+        faqs = FAQ.query.all()
         
-        # Fallback mechanism
+        for faq in faqs:
+            question_words = set(faq.question.lower().split())
+            if len(words & question_words) >= 2:  # If at least 2 words match
+                return faq.answer
+        
         return "I'm sorry, I don't have a specific answer for that question. You can find more information on our official website or in the student handbook. Would you like to schedule an appointment with an advisor for more detailed information?"
 
 def process_message(text):
     if not text or not isinstance(text, str):
         return "I'm sorry, but I couldn't process your input. Please try again with a valid text message."
     
-    # Spell-check the input
-    words = text.split()
-    misspelled = spell.unknown(words)
-    if misspelled:
-        corrected_words = [spell.correction(word) if word in misspelled else word for word in words]
-        corrected_text = " ".join(corrected_words)
-        
-        # If corrections were made, inform the user
-        if corrected_text != text:
-            response = f"I noticed some potential spelling errors. Did you mean: '{corrected_text}'?\n\n"
-        else:
-            response = ""
-    else:
-        corrected_text = text
-        response = ""
+    # Simple text cleanup
+    text = text.strip()
     
-    intent = get_intent(corrected_text)
-    response += get_response(intent, corrected_text)
+    intent = get_intent(text)
+    response = get_response(intent, text)
     return response

@@ -1,21 +1,44 @@
 /* Custom styles */
+body {
+    background-color: #fff2d4;
+}
+
+.navbar {
+    background-color: #80a08c !important;
+}
+
 #chat-container {
     background-color: var(--bs-dark);
     color: var(--bs-light);
+    height: 400px;
+    overflow-y: auto;
 }
 
 .message {
     margin-bottom: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .user-message {
-    background-color: var(--bs-primary);
-    align-self: flex-end;
+    background-color: #fff7e4;
+    color: var(--bs-dark);
+    margin-left: auto;
+    margin-right: 10px;
 }
 
 .bot-message {
-    background-color: var(--bs-secondary);
-    align-self: flex-start;
+    background-color: #fff7e4;
+    color: var(--bs-dark);
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+footer {
+    background-color: #fff7e4;
+    padding: 1rem 0;
+    margin-top: auto;
+    text-align: center;
 }

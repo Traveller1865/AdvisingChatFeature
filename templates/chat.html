@@ -3,17 +3,25 @@
 {% block content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
-        <div id="chat-container" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: auto;">
+        <div id="chat-container" class="border rounded p-3 mb-3">
             <div id="chat-messages"></div>
         </div>
-        <form id="chat-form">
+        <form id="chat-form" class="mb-4">
             <div class="input-group">
-                <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+                <input type="text" id="user-input" class="form-control" placeholder="Type your message..." required>
                 <button type="submit" class="btn btn-primary">Send</button>
             </div>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block footer %}
+<footer class="mt-4">
+    <div class="container">
+        <p class="mb-0">Student Advising Chatbot &copy; 2024</p>
+    </div>
+</footer>
 {% endblock %}
 
 {% block scripts %}
