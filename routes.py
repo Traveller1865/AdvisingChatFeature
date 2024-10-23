@@ -1,8 +1,9 @@
 from flask import render_template, request, jsonify, redirect, url_for
-from flask_login import login_required, current_user, login_user, logout_user
+from flask_login import login_required, current_user
 from app import app, db
 from models import User, Advisor, Appointment
 from chatbot import process_message
+from auth import authenticate_user
 from datetime import datetime, timedelta
 import logging
 import traceback
@@ -13,40 +14,22 @@ logging.basicConfig(filename='chatbot.log', level=logging.ERROR)
 @app.route('/')
 @login_required
 def index():
-    return redirect(url_for('chat'))
-
-@app.route('/chat')
-@login_required
-def chat():
     return render_template('chat.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('chat'))
-    
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        
-        user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            login_user(user)
-            return redirect(url_for('chat'))
+        if authenticate_user(username, password):
+            return redirect(url_for('index'))
         else:
-            return render_template('login.html', error="Invalid username or password")
-    
+            return render_template('login.html', error="Invalid credentials")
     return render_template('login.html')
 
-@app.route('/logout')
+@app.route('/chat', methods=['POST'])
 @login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-@app.route('/chat/message', methods=['POST'])
-@login_required
-def chat_message():
+def chat():
     message = request.form.get('message')
     try:
         if not message:

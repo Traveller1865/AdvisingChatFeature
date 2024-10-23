@@ -44,7 +44,7 @@ agentRequireRestartOnSave = false
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python download_spacy_model.py"
+args = "python -m spacy download en_core_web_sm"
 
 [[workflows.workflow]]
 name = "Run Flask App"
@@ -103,7 +103,7 @@ task = "shell.exec"
 args = "python add_sample_advisors.py"
 
 [deployment]
-run = ["sh", "-c", "python download_spacy_model.py"]
+run = ["sh", "-c", "python -m spacy download en_core_web_sm"]
 
 [[ports]]
 localPort = 5000

@@ -1,32 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="rounded-lg border text-card-foreground w-full max-w-md mx-auto shadow-lg bg-white p-6">
-    <div class="flex flex-col space-y-4">
-        <div class="flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 199 181" fill="none" class="rounded-full bg-[#80a08c] p-2">
-                <path d="M0.5 0L17.0537 21.6947C18.6661 23.8061 19.5261 26.3925 19.5261 28.979V117.025C19.5261 137.03 31.7264 153.552 50.5912 159.147C63.7052 163.053 85.5261 163.792 95.3616 175.933L99.5 181L103.638 175.933C113.528 163.792 135.295 163.053 148.409 159.147C167.274 153.552 179.474 137.03 179.474 117.025V28.979C179.474 26.3398 180.334 23.7533 181.946 21.6947L198.5 0H0.5Z" fill="white"/>
-                <path d="M188.018 5.22466L177.806 18.6321C175.495 21.6408 174.259 25.283 174.259 29.0307V117.076C174.259 134.601 163.993 149.17 146.956 154.237C134.057 158.037 110.838 158.882 99.5517 172.764C88.2651 158.882 65.0469 158.09 52.1478 154.237C35.0566 149.117 24.8449 134.548 24.8449 117.023V28.9779C24.8449 25.2302 23.6087 21.588 21.2977 18.5793L11.0859 5.17188H188.018V5.22466Z" fill="#1A5632"/>
-            </svg>
-        </div>
-        <h2 class="text-2xl font-bold text-center mb-6">Student Advising Login</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Login</h2>
         {% if error %}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
-            {{ error }}
-        </div>
+        <div class="alert alert-danger">{{ error }}</div>
         {% endif %}
-        <form method="POST" class="space-y-4">
-            <div>
-                <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background" id="username" name="username" required>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background" id="password" name="password" required>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#80a08c] text-white hover:bg-[#6b8a77] h-10 px-4 py-2">
-                Login
-            </button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>

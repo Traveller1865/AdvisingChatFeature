@@ -1,69 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="rounded-lg border text-card-foreground w-full max-w-2xl mx-auto h-[600px] flex flex-col shadow-lg bg-white">
-    <div class="p-4 flex flex-row items-center justify-between space-y-0 pb-2 bg-[#80a08c] text-white">
-        <div class="flex items-center space-x-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 199 181" fill="none" class="rounded-full bg-white p-1">
-                <path d="M0.5 0L17.0537 21.6947C18.6661 23.8061 19.5261 26.3925 19.5261 28.979V117.025C19.5261 137.03 31.7264 153.552 50.5912 159.147C63.7052 163.053 85.5261 163.792 95.3616 175.933L99.5 181L103.638 175.933C113.528 163.792 135.295 163.053 148.409 159.147C167.274 153.552 179.474 137.03 179.474 117.025V28.979C179.474 26.3398 180.334 23.7533 181.946 21.6947L198.5 0H0.5Z" fill="white"/>
-                <path d="M188.018 5.22466L177.806 18.6321C175.495 21.6408 174.259 25.283 174.259 29.0307V117.076C174.259 134.601 163.993 149.17 146.956 154.237C134.057 158.037 110.838 158.882 99.5517 172.764C88.2651 158.882 65.0469 158.09 52.1478 154.237C35.0566 149.117 24.8449 134.548 24.8449 117.023V28.9779C24.8449 25.2302 23.6087 21.588 21.2977 18.5793L11.0859 5.17188H188.018V5.22466Z" fill="#1A5632"/>
-                <path d="M55.157 144.421C57.898 145.213 61.499 145.952 65.3149 146.691C75.9566 148.802 89.1244 151.441 99.5511 158.778C109.924 151.441 123.092 148.802 133.787 146.691C137.603 145.952 141.258 145.213 143.945 144.421C156.253 140.779 163.885 130.274 163.885 117.025V28.9798C163.885 24.2292 165.175 19.5313 167.54 15.4141H31.5625C33.9273 19.5313 35.2172 24.2292 35.2172 28.9798V117.025C35.2172 130.274 42.8491 140.779 55.157 144.421ZM160.284 20.1647C159.478 23.0151 159.048 26.0239 159.048 28.9798V117.025C159.048 128.269 152.867 136.82 142.548 139.881C140.022 140.62 136.528 141.306 132.82 142.045C122.608 144.104 110.193 146.532 99.5511 153.078C88.9094 146.585 76.4941 144.104 66.2824 142.045C62.5739 141.306 59.0267 140.62 56.5544 139.881C46.2351 136.82 40.0544 128.269 40.0544 117.025V28.9798C40.0544 25.9711 39.6244 23.0151 38.8182 20.1647H160.284Z" fill="#FFC629"/>
-            </svg>
-            <div>
-                <h2 class="text-2xl font-bold">Student Advising Chatbot</h2>
-                <div class="flex items-center text-sm space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock h-4 w-4">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <span id="current-time"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar h-4 w-4 ml-2">
-                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                    </svg>
-                    <span id="current-date"></span>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div id="chat-container" class="border rounded p-3 mb-3" style="height: 400px; overflow-y: auto;">
+            <div id="chat-messages"></div>
         </div>
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 w-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out h-4 w-4">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" x2="9" y1="12" y2="12"></line>
-            </svg>
-            <span class="sr-only">Logout</span>
-        </button>
-    </div>
-    <div class="p-6 flex-grow overflow-auto py-6 bg-[#fff2d4]" id="chat-messages">
-        <div class="space-y-4">
-            <div class="flex justify-start">
-                <div class="rounded-lg px-4 py-2 max-w-[80%] bg-[#fff7e4] text-blue-900">
-                    Welcome to the Student Advising Chatbot! How can I assist you today?
-                </div>
+        <form id="chat-form">
+            <div class="input-group">
+                <input type="text" id="user-input" class="form-control" placeholder="Type your message...">
+                <button type="submit" class="btn btn-primary">Send</button>
             </div>
-        </div>
-    </div>
-    <div class="flex items-center p-6 pt-0 bg-[#fff7e4]">
-        <form id="chat-form" class="flex w-full items-center space-x-2 pt-4">
-            <input id="user-input" class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium" placeholder="Type your message..." />
-            <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 w-10 rounded-full bg-primary text-primary-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send h-4 w-4">
-                    <path d="m22 2-7 20-4-9-9-4Z"></path>
-                    <path d="M22 2 11 13"></path>
-                </svg>
-                <span class="sr-only">Send message</span>
-            </button>
-            <button type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-help h-4 w-4">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <path d="M12 17h.01"></path>
-                </svg>
-                <span class="sr-only">Help</span>
-            </button>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 {% endblock %}
