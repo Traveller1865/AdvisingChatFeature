@@ -2,23 +2,73 @@
 
 {% block admin_content %}
 <h2 class="mb-4">Admin Dashboard</h2>
-<div class="row">
+<div class="row g-4">
     <div class="col-md-6">
-        <div class="card mb-4">
+        <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">FAQs</h5>
-                <p class="card-text">Total FAQs: {{ faq_count }}</p>
-                <a href="{{ url_for('admin_faqs') }}" class="btn btn-primary">Manage FAQs</a>
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h5 class="card-title mb-0">FAQs</h5>
+                        <small class="text-success">+2 since last month</small>
+                    </div>
+                    <div class="rounded-circle bg-light p-2">
+                        <i class="fas fa-question-circle fa-2x text-primary"></i>
+                    </div>
+                </div>
+                <h2 class="mb-3">{{ faq_count }}</h2>
+                <div class="progress mb-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ (faq_count/10)*100 }}%"></div>
+                </div>
+                <a href="{{ url_for('admin_faqs') }}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i> Add New FAQ
+                </a>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card mb-4">
+        <div class="card h-100 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title">Advisors</h5>
-                <p class="card-text">Total Advisors: {{ advisor_count }}</p>
-                <a href="{{ url_for('admin_advisors') }}" class="btn btn-primary">Manage Advisors</a>
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h5 class="card-title mb-0">Advisors</h5>
+                        <small class="text-success">+1 since last month</small>
+                    </div>
+                    <div class="rounded-circle bg-light p-2">
+                        <i class="fas fa-users fa-2x text-primary"></i>
+                    </div>
+                </div>
+                <h2 class="mb-3">{{ advisor_count }}</h2>
+                <div class="progress mb-3" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ (advisor_count/5)*100 }}%"></div>
+                </div>
+                <a href="{{ url_for('admin_advisors') }}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i> Add New Advisor
+                </a>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4 shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-4">Recent Activity</h5>
+        <div class="list-group list-group-flush">
+            {% for i in range(3) %}
+            <div class="list-group-item px-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-circle bg-light p-2 me-3">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0">FAQ Updated</h6>
+                            <small class="text-muted">Updated "How do I change my major?"</small>
+                        </div>
+                    </div>
+                    <small class="text-muted">Just now</small>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

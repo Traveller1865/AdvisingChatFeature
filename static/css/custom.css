@@ -12,6 +12,7 @@ body {
     margin-right: 15px;
 }
 
+/* Chat styles */
 #chat-container {
     background-color: white;
     border: 2px solid #80a08c;
@@ -43,6 +44,44 @@ body {
     margin-left: 10px;
 }
 
+/* Admin Dashboard styles */
+.card {
+    border: none;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.progress {
+    background-color: rgba(128, 160, 140, 0.2);
+}
+
+.progress-bar {
+    background-color: #80a08c;
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 160, 140, 0.1);
+}
+
+.list-group-item.active {
+    background-color: #80a08c;
+    border-color: #80a08c;
+}
+
+.list-group-item:hover:not(.active) {
+    background-color: rgba(128, 160, 140, 0.1);
+}
+
+/* General form styles */
 .input-group {
     border: 2px solid #80a08c;
     border-radius: 10px;
@@ -54,7 +93,7 @@ body {
     border: none;
     background-color: white;
     margin-right: 10px;
-    color: black;  /* Add this line to ensure black text */
+    color: black;
 }
 
 #chat-form button {
@@ -72,4 +111,9 @@ footer {
     padding: 1rem 0;
     margin-top: auto;
     text-align: center;
+}
+
+/* Shadow utilities */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }

@@ -1,124 +1,165 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on an admin page by looking for admin-specific elements
-    const isAdminPage = document.querySelector('#addFaqModal') || document.querySelector('#addAdvisorModal');
-    
-    if (!isAdminPage) {
-        return; // Exit if we're not on an admin page
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Error handling function
+    function handleError(error, customMessage) {
+        console.error('Error:', error);
+        const errorMessage = customMessage || 'An unexpected error occurred. Please try again.';
+        
+        // Create and show error alert
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.innerHTML = `
+            ${errorMessage}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        const container = document.querySelector('.container');
+        if (container) {
+            container.insertBefore(alertDiv, container.firstChild);
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alertDiv);
+                bsAlert.close();
+            }, 5000);
+        }
     }
 
     // FAQ Management
-    function editFaq(faqId) {
-        if (!document.getElementById('editFaqModal')) return;
-        
+    window.editFaq = function(faqId) {
+        const modal = document.getElementById('editFaqModal');
+        if (!modal) return;
+
         fetch(`/admin/faq/${faqId}`)
-            .then(response => response.json())
-            .then(data => {
-                const editForm = document.getElementById('editFaqForm');
-                if (!editForm) return;
-
-                document.getElementById('editFaqId').value = data.id;
-                document.getElementById('editQuestion').value = data.question;
-                document.getElementById('editAnswer').value = data.answer;
-                document.getElementById('editCategory').value = data.category;
-                editForm.action = `/admin/faq/${faqId}/edit`;
-                const modal = new bootstrap.Modal(document.getElementById('editFaqModal'));
-                modal.show();
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch FAQ data');
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error fetching FAQ details');
-            });
-    }
+            .then(data => {
+                const form = document.getElementById('editFaqForm');
+                if (!form) throw new Error('Edit form not found');
 
-    function deleteFaq(faqId) {
+                form.querySelector('#editFaqId').value = data.id;
+                form.querySelector('#editQuestion').value = data.question;
+                form.querySelector('#editAnswer').value = data.answer;
+                form.querySelector('#editCategory').value = data.category;
+                form.action = `/admin/faq/${faqId}/edit`;
+
+                const bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+            })
+            .catch(error => handleError(error, 'Failed to load FAQ details'));
+    };
+
+    window.deleteFaq = function(faqId) {
         if (confirm('Are you sure you want to delete this FAQ?')) {
-            fetch(`/admin/faq/${faqId}/delete`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Error deleting FAQ');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error deleting FAQ');
-                });
+            fetch(`/admin/faq/${faqId}/delete`, { 
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete FAQ');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    throw new Error(data.error || 'Failed to delete FAQ');
+                }
+            })
+            .catch(error => handleError(error, 'Failed to delete FAQ'));
         }
-    }
+    };
 
     // Advisor Management
-    function editAdvisor(advisorId) {
-        if (!document.getElementById('editAdvisorModal')) return;
+    window.editAdvisor = function(advisorId) {
+        const modal = document.getElementById('editAdvisorModal');
+        if (!modal) return;
 
         fetch(`/admin/advisor/${advisorId}`)
-            .then(response => response.json())
-            .then(data => {
-                const editForm = document.getElementById('editAdvisorForm');
-                if (!editForm) return;
-
-                document.getElementById('editAdvisorId').value = data.id;
-                document.getElementById('editName').value = data.name;
-                document.getElementById('editDepartment').value = data.department;
-                document.getElementById('editEmail').value = data.email;
-                editForm.action = `/admin/advisor/${advisorId}/edit`;
-                const modal = new bootstrap.Modal(document.getElementById('editAdvisorModal'));
-                modal.show();
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch advisor data');
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error fetching advisor details');
-            });
-    }
+            .then(data => {
+                const form = document.getElementById('editAdvisorForm');
+                if (!form) throw new Error('Edit form not found');
 
-    function deleteAdvisor(advisorId) {
+                form.querySelector('#editAdvisorId').value = data.id;
+                form.querySelector('#editName').value = data.name;
+                form.querySelector('#editDepartment').value = data.department;
+                form.querySelector('#editEmail').value = data.email;
+                form.action = `/admin/advisor/${advisorId}/edit`;
+
+                const bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+            })
+            .catch(error => handleError(error, 'Failed to load advisor details'));
+    };
+
+    window.deleteAdvisor = function(advisorId) {
         if (confirm('Are you sure you want to delete this advisor?')) {
-            fetch(`/admin/advisor/${advisorId}/delete`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert('Error deleting advisor');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error deleting advisor');
-                });
+            fetch(`/admin/advisor/${advisorId}/delete`, { 
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete advisor');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    throw new Error(data.error || 'Failed to delete advisor');
+                }
+            })
+            .catch(error => handleError(error, 'Failed to delete advisor'));
         }
-    }
-
-    // Make functions globally available
-    window.editFaq = editFaq;
-    window.deleteFaq = deleteFaq;
-    window.editAdvisor = editAdvisor;
-    window.deleteAdvisor = deleteAdvisor;
+    };
 
     // Form submission handlers
-    const forms = document.querySelectorAll('#addFaqForm, #editFaqForm, #addAdvisorForm, #editAdvisorForm');
-    forms.forEach(form => {
+    const addFaqForm = document.getElementById('addFaqForm');
+    const editFaqForm = document.getElementById('editFaqForm');
+    const addAdvisorForm = document.getElementById('addAdvisorForm');
+    const editAdvisorForm = document.getElementById('editAdvisorForm');
+
+    [addFaqForm, editFaqForm, addAdvisorForm, editAdvisorForm].forEach(form => {
         if (form) {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
+
                 fetch(this.action, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Form submission failed');
+                    return response.json();
+                })
                 .then(data => {
                     if (data.success) {
                         location.reload();
                     } else {
-                        alert(data.error || 'An error occurred');
+                        throw new Error(data.error || 'Form submission failed');
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred');
-                });
+                .catch(error => handleError(error, 'Failed to submit form'));
             });
         }
     });

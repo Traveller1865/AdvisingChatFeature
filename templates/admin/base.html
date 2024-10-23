@@ -4,15 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <div class="list-group mb-4">
+            <div class="list-group mb-4 shadow-sm">
                 <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action {% if active_page == 'dashboard' %}active{% endif %}">
-                    Dashboard
+                    <i class="fas fa-chart-line me-2"></i> Dashboard
                 </a>
                 <a href="{{ url_for('admin_faqs') }}" class="list-group-item list-group-item-action {% if active_page == 'faqs' %}active{% endif %}">
-                    Manage FAQs
+                    <i class="fas fa-question-circle me-2"></i> Manage FAQs
                 </a>
                 <a href="{{ url_for('admin_advisors') }}" class="list-group-item list-group-item-action {% if active_page == 'advisors' %}active{% endif %}">
-                    Manage Advisors
+                    <i class="fas fa-users me-2"></i> Manage Advisors
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fas fa-brain me-2"></i> Model Training
                 </a>
             </div>
         </div>
@@ -21,4 +24,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 {% endblock %}

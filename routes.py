@@ -53,10 +53,13 @@ def chat():
             
             if advisor:
                 appointment_date = datetime.now() + timedelta(days=7)
-                appointment = Appointment(user_id=current_user.id,
-                                       advisor_id=advisor.id,
-                                       date=appointment_date)
-                db.session.add(appointment)
+                new_appointment = Appointment(
+                    user_id=current_user.id,
+                    advisor_id=advisor.id,
+                    date=appointment_date,
+                    status='Scheduled'
+                )
+                db.session.add(new_appointment)
                 db.session.commit()
                 
                 response += f"\n\nI've scheduled an appointment for you with {advisor.name} on {appointment_date.strftime('%Y-%m-%d %H:%M')}."
@@ -97,12 +100,12 @@ def admin_advisors():
 @admin_required
 def admin_add_faq():
     try:
-        faq = FAQ(
+        new_faq = FAQ(
             question=request.form['question'],
             answer=request.form['answer'],
             category=request.form['category']
         )
-        db.session.add(faq)
+        db.session.add(new_faq)
         db.session.commit()
         return jsonify({'success': True})
     except Exception as e:
@@ -151,12 +154,12 @@ def admin_delete_faq(faq_id):
 @admin_required
 def admin_add_advisor():
     try:
-        advisor = Advisor(
+        new_advisor = Advisor(
             name=request.form['name'],
             department=request.form['department'],
             email=request.form['email']
         )
-        db.session.add(advisor)
+        db.session.add(new_advisor)
         db.session.commit()
         return jsonify({'success': True})
     except Exception as e:
