@@ -1,56 +1,292 @@
+# data/nlu.yml
+
 version: "3.1"
+
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - greetings
-    - good morning
-    - good evening
-    - hey there
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - greetings
+      - good morning
+      - good evening
+      - hey there
 
-- intent: registration_info
-  examples: |
-    - how do I register for classes
-    - what's the registration process
-    - tell me about course registration
-    - help me register for courses
-    - registration steps
-    - how to sign up for classes
-    - class registration procedure
+  - intent: registration_info
+    examples: |
+      - how do I register for classes
+      - what's the registration process
+      - tell me about course registration
+      - help me register for courses
+      - registration steps
+      - how to sign up for classes
+      - class registration procedure
+      - what is my degree or declaration
+      - what does my 4 year plan look like
+      - how can I change my major
+      - what are the prerequisites for [Calculus](course_name)
+      - how to add a minor in [Psychology](minor)
+      - deadlines for course registration
 
-- intent: appointment_request
-  examples: |
-    - I want to meet with an advisor
-    - can I schedule an appointment
-    - book a meeting with advisor
-    - need to talk to an advisor
-    - schedule advisor meeting
-    - make an appointment
+  - intent: appointment_request
+    examples: |
+      - I want to meet with an advisor
+      - can I schedule an appointment
+      - book a meeting with [advisor](advisor_type)
+      - need to talk to an [academic advisor](advisor_type)
+      - schedule a [career counselor](advisor_type) meeting
+      - make an appointment with a [mentor](advisor_type)
+      - set up a consultation with a [professor](advisor_type) on [Monday](date)
+      - I’d like to arrange a meeting with a [mentor](advisor_type) at [2 PM](time)
 
-- intent: deadline_query
-  examples: |
-    - when is the registration deadline
-    - what's the last day to register
-    - registration cutoff date
-    - deadline for course registration
-    - last date to sign up
-    - when do I need to register by
+  - intent: deadline_query
+    examples: |
+      - when is the registration deadline
+      - what's the last day to register
+      - registration cutoff date
+      - deadline for course registration
+      - last date to sign up
+      - when do I need to register by
+      - when is the last day to withdraw from classes
+      - when is the last day to drop from classes
+      - deadline for internship applications
+      - when is the scholarship application deadline
 
-- intent: thanks
-  examples: |
-    - thanks
-    - thank you
-    - appreciate it
-    - thanks a lot
-    - thank you very much
+  - intent: thanks
+    examples: |
+      - thanks
+      - thank you
+      - appreciate it
+      - thanks a lot
+      - thank you very much
+      - many thanks
+      - I appreciate your help
 
-- intent: goodbye
-  examples: |
-    - bye
-    - goodbye
-    - see you later
-    - good night
-    - bye bye
-    - have a nice day
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you later
+      - good night
+      - bye bye
+      - have a nice day
+      - talk to you later
+
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you human?
+      - are you an AI?
+      - am I talking to a bot?
+      - are you automated?
+      - what is your purpose?
+      - what do you do?
+      - how smart are you?
+      - can you think like a human?
+
+  - intent: small_talk
+    examples: |
+      - how are you?
+      - what's up?
+      - tell me a joke
+      - how's the weather?
+      - do you like studying?
+      - what's your favorite color?
+      - how's your day going?
+      - any plans for the weekend?
+
+  - intent: express_emotion
+    examples: |
+      - I'm feeling stressed
+      - I'm excited about my classes
+      - I'm worried about my GPA
+      - I'm happy with my progress
+      - I'm anxious about exams
+      - I'm frustrated with my schedule
+      - I feel overwhelmed
+      - I feel worried about my future
+      - I'm feeling down
+      - I'm really happy today
+
+  - intent: information_request
+    examples: |
+      - What is SELU?
+      - What are the building names?
+      - What is the [School of Engineering](school_name) mission?
+      - What is the [School of Arts](school_name) vision?
+      - What are the [School of Science](school_name) core values?
+      - What is the [School of Business](school_name) history?
+      - Can you tell me about the [Library Services](service)?
+      - What facilities are available at [Student Center](location)?
+      - How do I access [Online Resources](resource)?
+      - What is the [Academic Calendar](calendar)?
+      - Where can I find the [Course Catalog](catalog)?
+
+  - intent: academic_advising
+    examples: |
+      - How can I improve my GPA?
+      - What courses should I take next semester?
+      - Can you help me plan my academic path?
+      - I need advice on choosing electives
+      - How do I balance my course load
+      - What are the requirements for graduation?
+      - Can you help me with my degree audit
+      - What are the best strategies for studying
+      - How do I prepare for final exams?
+      - Tips for succeeding in [Data Structures](course_name)
+      - How do I declare a double major?
+      - What are the requirements for a minor in [Biology](minor)
+
+  - intent: social_advising
+    examples: |
+      - How do I join a club?
+      - What extracurricular activities are available?
+      - Can you suggest some student organizations?
+      - How can I get involved on campus?
+      - What are the popular events this semester?
+      - How do I make friends at college?
+      - Tips for networking with peers
+      - Where can I find volunteer opportunities?
+      - How to balance social life with studies?
+      - Information about [Student Government](organization)
+      - How do I get involved in [Intramural Sports](activity)?
+      - Are there any leadership programs available?
+
+  - intent: career_guidance
+    examples: |
+      - How do I find internships?
+      - What career services are available?
+      - Can you help me with my resume?
+      - Tips for job interviews
+      - How to network professionally
+      - What are the top companies hiring graduates?
+      - Guidance on choosing a career path
+      - How to apply for graduate school
+      - Information about [Career Fairs](event)
+      - How to build a professional LinkedIn profile?
+      - What are the steps to start my own business?
+      - How do I transition from internships to full-time roles?
+
+  - intent: post_graduate_advising
+    examples: |
+      - What are the options after graduation?
+      - How do I apply for graduate programs?
+      - Can you help me with my graduate school applications?
+      - Information on fellowship opportunities
+      - How to transition from college to workforce
+      - Tips for writing a strong personal statement
+      - How to secure letters of recommendation
+      - Guidance on choosing a graduate school
+      - What are the benefits of pursuing a master's degree?
+      - Steps to take before graduating
+      - How to prepare for the GRE?
+      - What are the top graduate programs in [Computer Science](field)?
+
+  - intent: provide_feedback
+    examples: |
+      - I want to give some feedback
+      - Here's my feedback
+      - I have some suggestions
+      - I'd like to share my experience
+      - Can I provide feedback?
+      - Feedback about my advising session
+      - I have ideas to improve the service
+      - My thoughts on the campus facilities
+      - Suggestion for better academic support
+      - Feedback on the online resources
+      - I want to report an issue
+      - How can I help improve the Student Advisor Bot?
+
+  - intent: request_resources
+    examples: |
+      - Where can I find tutoring services?
+      - How do I access the writing center?
+      - Information about mental health services
+      - Where is the campus gym located?
+      - How to use the library's online catalog
+      - Accessing career counseling resources
+      - Information on financial aid offices
+      - How to book study rooms
+      - Where to find transportation services
+      - Resources for international students
+      - How to apply for scholarships?
+
+  - intent: technical_issue
+    examples: |
+      - I'm having trouble logging in
+      - The registration system isn't working
+      - I can't access my student portal
+      - The website is down
+      - Error message when trying to register
+      - Help with resetting my password
+      - Issues with online classes platform
+      - Cannot submit my assignment online
+      - Technical difficulties with advising tool
+      - My email isn't working
+      - Unable to access course materials
+      - System crash during registration
+
+  - intent: schedule_change
+    examples: |
+      - I need to change my appointment time
+      - Can I reschedule my meeting with an advisor?
+      - I want to postpone my consultation
+      - How do I update my appointment date?
+      - Change the time of my advisor meeting
+      - Need to adjust my scheduled session
+      - Reschedule my career counseling appointment
+      - Move my meeting to next week
+      - Shift my advising session to a different day
+      - Cancel my current appointment
+      - Can I switch my appointment to a different advisor?
+      - Modify my meeting details
+
+  - intent: resource_inquiry
+    examples: |
+      - What study materials are available for [Calculus](course_name)?
+      - Where can I find past exam papers?
+      - Are there any online tutorials for [Python](topic)?
+      - How do I access lecture recordings?
+      - Information about [Library](location) hours
+      - Resources for learning [Data Science](topic)
+      - How to join study groups?
+      - Availability of lab equipment
+      - Access to research journals
+      - Where can I find video lectures for [Organic Chemistry](course_name)?
+      - How do I use the [Library's](service) e-resources?
+
+  - intent: mentor_request
+    examples: |
+      - I want to be paired with a mentor
+      - Can you connect me with a mentor?
+      - How do I find a study buddy?
+      - Looking for a peer mentor
+      - I need guidance from a senior student
+      - Help me find a mentor for [Computer Science](major)
+      - Mentorship opportunities available
+      - How to apply for a mentoring program?
+      - Seeking academic mentorship
+      - Connect me with a professional mentor
+      - I’d like to have a mentor in [Biology](field)
+      - How to start a mentoring relationship?
+
+  - intent: inform
+    examples: |
+      - I can meet on [November 5th](date) at [3 PM](time)
+      - How about [next Tuesday](date) at [2 PM](time)
+      - The appointment is on [Friday](date)
+      - Let's schedule it for [tomorrow](date) at [10 AM](time)
+      - [December 12th](date) works for me
+      - [2 PM](time) is a good time
+      - I prefer [morning](time) on [Monday](date)
+
+  - intent: out_of_scope
+    examples: |
+      - I want to order a pizza
+      - Tell me a joke
+      - Play some music
+      - What's the weather like today?
+      - How do I bake a cake?
+      - Can you dance?
+      - Show me some memes

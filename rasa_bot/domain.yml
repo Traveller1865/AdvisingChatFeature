@@ -1,3 +1,5 @@
+# domain.yml
+
 version: "3.1"
 
 intents:
@@ -8,29 +10,213 @@ intents:
   - deadline_query
   - thanks
   - bot_challenge
+  - small_talk
+  - express_emotion
+  - information_request
+  - academic_advising
+  - social_advising
+  - career_guidance
+  - post_graduate_advising
+  - provide_feedback
+  - request_resources
+  - technical_issue
+  - schedule_change
+  - resource_inquiry
+  - mentor_request
+  - out_of_scope
+  - inform
+
+entities:
+  - advisor_type
+  - date
+  - time
+  - meeting_type
+  - course_name
+  - minor
+  - major
+  - topic
+  - field
+  - service
+  - location
+  - organization
+  - activity
+  - event
+  - calendar
+  - catalog
+  - school_name
+
+slots:
+  advisor_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: advisor_type
+      - type: from_text
+        conditions:
+          - active_loop: appointment_form
+
+  date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date
+      - type: from_text
+        conditions:
+          - active_loop: appointment_form
+
+  time:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: time
+      - type: from_text
+        conditions:
+          - active_loop: appointment_form
+
+  meeting_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: meeting_type
+      - type: from_text
+        conditions:
+          - active_loop: appointment_form
+
+  course_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: course_name
+      - type: from_text
+
+  minor:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: minor
+      - type: from_text
+
+  major:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: major
+      - type: from_text
+
+  topic:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: topic
+      - type: from_text
+
+  field:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: field
+      - type: from_text
+
+  # Continue adding mappings for all other slots similarly...
+
+forms:
+  appointment_form:
+    required_slots:
+      - advisor_type
+      - date
+      - time
+      - meeting_type
 
 responses:
   utter_greet:
-  - text: "Hello! How can I help you with your academic needs today?"
+    - text: "Hello! How can I assist you with your academic and personal development today?"
 
   utter_goodbye:
-  - text: "Goodbye! Have a great day!"
-
-  utter_iamabot:
-  - text: "I am a student advising chatbot, designed to help you with academic inquiries."
-
-  utter_welcome:
-  - text: "You're welcome! Is there anything else I can help you with?"
+    - text: "Goodbye! If you need any more help, feel free to reach out."
 
   utter_registration_steps:
-  - text: "Here are the steps for course registration:\n1. Log in to your student portal\n2. Navigate to 'Course Registration'\n3. Browse available courses\n4. Select desired courses\n5. Confirm your selection\n\nWould you like to schedule an appointment with an advisor for more detailed guidance?"
+    - text: "To register for classes, please log in to your student portal using your university credentials. Navigate to the 'Course Registration' section and follow the prompts to select your desired courses."
 
   utter_appointment_info:
-  - text: "I can help you schedule an appointment with an academic advisor. Would you like to see the list of available advisors?"
+    - text: "Sure! I can help you schedule an appointment with an advisor."
+
+  utter_ask_advisor_type:
+    - text: "What type of advisor would you like to meet with? (e.g., academic advisor, career counselor, mentor)"
+
+  utter_ask_date:
+    - text: "On which date would you like to schedule the appointment?"
+
+  utter_ask_time:
+    - text: "What time works best for you?"
+
+  utter_ask_meeting_type:
+    - text: "Would you prefer an in-person or virtual meeting?"
 
   utter_deadlines:
-  - text: "For the current semester:\nRegistration deadline: October 31, 2024\nLate registration: November 1-7, 2024 (additional fee applies)\n\nWould you like to know about other important dates?"
+    - text: "The registration deadline is October 31, 2024. The last day to withdraw from classes is November 15, 2024. For internship and scholarship application deadlines, please check the respective department websites."
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_thanks:
+    - text: "You're welcome! Glad I could help."
+
+  utter_welcome:
+    - text: "You're welcome! Is there anything else I can assist you with?"
+
+  utter_iamabot:
+    - text: "Yes, I'm a virtual assistant designed to help you with your academic and personal queries at the university."
+
+  utter_small_talk:
+    - text: "I'm just a bot, but I'm here to help you! How can I assist you today?"
+
+  utter_emotional_support:
+    - text: "I'm sorry to hear that you're feeling this way. Would you like information on counseling services or resources that might help?"
+
+  utter_fallback:
+    - text: "I'm sorry, I didn't understand that. Could you please rephrase or ask me something else?"
+
+  utter_schedule_meeting_confirmation:
+    - text: "Your {meeting_type} meeting with a {advisor_type} has been scheduled for {date} at {time}. You will receive a confirmation email shortly."
+
+  utter_schedule_change_info:
+    - text: "Sure, I can help you reschedule your appointment. Please provide the new date and time."
+
+  utter_feedback_acknowledgment:
+    - text: "Thank you for your feedback! We appreciate your input and will work on improving our services."
+
+  utter_provide_information:
+    - text: "Here is the information you requested about {topic}: [Insert detailed information here]."
+
+  utter_academic_advising:
+    - text: "For academic advising, it's best to meet with your assigned advisor to discuss your academic plan, course selections, and strategies for success."
+
+  utter_social_advising:
+    - text: "Getting involved on campus is a great idea! You can join clubs, organizations, and attend events listed on the university's student life webpage."
+
+  utter_career_guidance:
+    - text: "Our Career Services department offers resources like resume workshops, job fairs, and one-on-one counseling to help you prepare for your career."
+
+  utter_post_graduate_advising:
+    - text: "Thinking about post-graduate options? I can provide information on graduate programs, application processes, and how to prepare for the next steps."
+
+  utter_mentor_request:
+    - text: "We can help connect you with a mentor in your field of interest. Would you like assistance in finding a faculty or peer mentor?"
+
+  utter_technical_issue:
+    - text: "I'm sorry to hear you're experiencing technical issues. Please contact the IT Help Desk at (555) 123-4567 or email support@university.edu for immediate assistance."
+
+  utter_request_resources:
+    - text: "The university offers a variety of resources. Could you specify which resources you're interested in? (e.g., tutoring, financial aid, mental health services)"
+
+actions:
+  - action_schedule_appointment
+  - action_provide_information
+  - action_handle_feedback
+  - action_provide_resource_info  # Added this action

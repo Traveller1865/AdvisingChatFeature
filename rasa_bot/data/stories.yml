@@ -1,27 +1,134 @@
+# data/stories.yml
+
 version: "3.1"
 
 stories:
-- story: registration path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: registration_info
-  - action: utter_registration_steps
-  - intent: thanks
-  - action: utter_welcome
+  - story: greet and registration
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: registration_info
+      - action: utter_registration_steps
+      - intent: thanks
+      - action: utter_welcome
 
-- story: appointment path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: appointment_request
-  - action: utter_appointment_info
-  - intent: thanks
-  - action: utter_welcome
+  - story: appointment scheduling
+    steps:
+      - intent: appointment_request
+      - action: appointment_form
+      - active_loop: appointment_form
+      - action: appointment_form
+      - active_loop: null
+      - action: action_schedule_appointment
+      - action: utter_welcome
 
-- story: deadline inquiry
-  steps:
-  - intent: deadline_query
-  - action: utter_deadlines
-  - intent: thanks
-  - action: utter_welcome
+  - story: deadline inquiry
+    steps:
+      - intent: deadline_query
+      - action: utter_deadlines
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: bot challenge
+    steps:
+      - intent: bot_challenge
+      - action: utter_iamabot
+
+  - story: small talk
+    steps:
+      - intent: small_talk
+      - action: utter_small_talk
+
+  - story: express emotion
+    steps:
+      - intent: express_emotion
+      - action: utter_emotional_support
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: provide feedback
+    steps:
+      - intent: provide_feedback
+      - action: action_handle_feedback
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: schedule change
+    steps:
+      - intent: schedule_change
+      - action: utter_schedule_change_info
+      - intent: inform
+      - action: appointment_form
+      - active_loop: appointment_form
+      - action: appointment_form
+      - active_loop: null
+      - action: action_schedule_appointment
+      - action: utter_welcome
+
+  - story: academic advising
+    steps:
+      - intent: academic_advising
+      - action: utter_academic_advising
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: social advising
+    steps:
+      - intent: social_advising
+      - action: utter_social_advising
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: career guidance
+    steps:
+      - intent: career_guidance
+      - action: utter_career_guidance
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: post-graduate advising
+    steps:
+      - intent: post_graduate_advising
+      - action: utter_post_graduate_advising
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: information request
+    steps:
+      - intent: information_request
+      - action: action_provide_information
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: resource inquiry
+    steps:
+      - intent: resource_inquiry
+      - action: action_provide_resource_info
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: mentor request
+    steps:
+      - intent: mentor_request
+      - action: utter_mentor_request
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: technical issue
+    steps:
+      - intent: technical_issue
+      - action: utter_technical_issue
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: request resources
+    steps:
+      - intent: request_resources
+      - action: utter_request_resources
+      - intent: thanks
+      - action: utter_welcome
+
+  - story: fallback path
+    steps:
+      - intent: out_of_scope
+      - action: utter_fallback
