@@ -1,10 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on an admin page
-    const adminContent = document.querySelector('.container .row .col-md-9');
-    if (!adminContent) return;  // Exit if not on admin page
+    const adminContainer = document.querySelector('.container .row .col-md-9');
+    if (!adminContainer) return;  // Exit if not on admin page
     
     initializeAdminFunctionality();
 });
+
+function handleFormSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Form submission failed');
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            throw new Error(data.error || 'Form submission failed');
+        }
+    })
+    .catch(error => handleError(error, 'Failed to submit form'));
+}
 
 function initializeAdminFunctionality() {
     // Initialize tooltips if Bootstrap is loaded
@@ -38,7 +63,7 @@ function initializeAdminFunctionality() {
         }
     }
 
-    // Initialize forms
+    // Initialize forms with proper null checks
     const forms = {
         addFaq: document.getElementById('addFaqForm'),
         editFaq: document.getElementById('editFaqForm'),
@@ -46,34 +71,11 @@ function initializeAdminFunctionality() {
         editAdvisor: document.getElementById('editAdvisorForm')
     };
 
-    // Form submission handler
+    // Add event listeners only to forms that exist
     Object.entries(forms).forEach(([formName, form]) => {
-        if (!form) return;
-        
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Form submission failed');
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                } else {
-                    throw new Error(data.error || 'Form submission failed');
-                }
-            })
-            .catch(error => handleError(error, 'Failed to submit form'));
-        });
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
     });
 
     // FAQ Management
@@ -173,4 +175,4 @@ function initializeAdminFunctionality() {
         })
         .catch(error => handleError(error, 'Failed to delete advisor'));
     };
-});
+}

@@ -5,3 +5,10 @@ tensorflow-text==2.12.0
 numpy==1.23.5
 SQLAlchemy<2.0
 setuptools>=65.5.0
+flask
+flask-login
+flask-sqlalchemy
+rasa
+spacy
+sqlalchemy
+werkzeug
