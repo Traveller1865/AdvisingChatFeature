@@ -31,10 +31,15 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        if authenticate_user(username, password):
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            login_user(user)
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', error="Invalid credentials")
+            error = "Invalid username or password"
+            if not user:
+                error = f"User '{username}' not found"
+            return render_template('login.html', error=error)
     return render_template('login.html')
 
 @app.route('/chat', methods=['POST'])
@@ -72,7 +77,6 @@ def chat():
         logging.error(error_message)
         return jsonify({'error': 'An error occurred processing your message'}), 500
 
-# Admin routes
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
@@ -107,7 +111,6 @@ def admin_advisors():
         logging.error(f"Error loading advisors: {str(e)}")
         return render_template('error.html', error="An error occurred loading the advisors"), 500
 
-# FAQ CRUD operations
 @app.route('/admin/faq/add', methods=['POST'])
 @admin_required
 def admin_add_faq():
@@ -168,7 +171,6 @@ def admin_delete_faq(faq_id):
         logging.error(f"Error deleting FAQ {faq_id}: {str(e)}")
         return jsonify({'success': False, 'error': str(e)})
 
-# Advisor CRUD operations
 @app.route('/admin/advisor/add', methods=['POST'])
 @admin_required
 def admin_add_advisor():

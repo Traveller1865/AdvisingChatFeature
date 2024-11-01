@@ -24,6 +24,7 @@ def test_and_create_user():
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
+            db.session.rollback()
         finally:
             db.session.close()
 
